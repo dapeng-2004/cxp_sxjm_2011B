@@ -1,0 +1,220 @@
+\documentclass{ctexart}
+
+\usepackage{appendix}
+\usepackage{listings}% 插入代码
+\usepackage{xcolor} 
+\usepackage{graphicx}% 插入表格/图片
+\usepackage{booktabs} % 绘制表格
+\usepackage{caption} % 标题
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{subfigure} % 插入图片
+\usepackage{longtable}
+\usepackage{abstract}% 摘要
+\pagestyle{plain} % 页眉消失
+\usepackage{setspace}
+\usepackage{multirow}% 表格
+\usepackage{diagbox}
+\usepackage{enumerate}% 序号
+\usepackage{float}% 固定图片或表格的位置
+\usepackage{gensymb}
+\usepackage{microtype}
+
+\geometry{a4paper,left=2.5cm,right=2.5cm,top=2cm,bottom=2cm}% 页边距
+\lstset{
+    numbers=left, % 设置行号位置
+    numberstyle=\tiny, % 设置行号大小
+    keywordstyle=\color{blue}, % 设置关键字颜色
+    commentstyle=\color[cmyk]{1,0,1,0}, % 设置注释颜色
+    escapeinside=``, % 逃逸字符(1左面的键)，用于显示中文
+    breaklines, % 自动折行
+    extendedchars=false, % 解决代码跨页时，章节标题，页眉等汉字不显示的问题
+    xleftmargin=1em,xrightmargin=1em, aboveskip=1em, % 设置边距
+    tabsize=4, % 设置tab空格数
+    showspaces=false % 不显示空格
+}
+
+\title{交巡警服务平台的设置与调度}
+\date{}
+\author{}
+
+\begin{document}
+\maketitle
+\renewcommand{\abstractname}{\Large\textbf{摘要}\\} % 使用 \huge 调整字体大小
+\vspace{-4em} % 调整标题上间距
+\begin{abstract}
+\normalsize
+本文针对问题，建立了回溯算法等多种模型，解决了交巡警服务平台的设置与调度问题。
+
+针对问题一，对三公里路程内进行搜索，
+
+针对问题二，
+
+针对问题三，
+
+针对问题四，
+
+针对问题五，
+
+
+
+\textbf{关键字}：
+\end{abstract}
+\newpage
+
+
+
+% 重新设置页面边距
+    \newgeometry{a4paper,left=3.18cm,right=3.18cm,top=2.54cm,bottom=2.54cm}
+	\section{问题背景与重述}
+	\subsection{问题背景}
+    “有困难找警察”，是家喻户晓的一句流行语。警察肩负着刑事执法、治安管理、交通管理、服务群众四大职能。为了更有效地贯彻实施这些职能，需要在市区的一些交通要道和重要部位设置交巡警服务平台。每个交巡警服务平台的职能和警力配备基本相同。由于警务资源是有限的，如何根据城市的实际情况与需求合理地设置交巡警服务平台、分配各平台的管辖范围、调度警务资源是警务部门面临的一个实际课题。
+试就某市设置交巡警服务平台的相关情况，建立数学模型分析研究下面的问题：
+    \subsection{问题表述}
+    \begin{enumerate}[(1)]
+        \item 问题一：附件1中的附图1给出了该市中心城区A的交通网络和现有的20个交巡警服务平台的设置情况示意图，相关的数据信息见附件2。请为各交巡警服务平台分配管辖范围，使其在所管辖的范围内出现突发事件时，尽量能在3分钟内有交巡警（警车的时速为60km/h）到达事发地。
+        \item 问题二：对于重大突发事件，需要调度全区20个交巡警服务平台的警力资源，对进出该区的13条交通要道实现快速全封锁。实际中一个平台的警力最多封锁一个路口，请给出该区交巡警服务平台警力合理的调度方案。
+        \item 问题三：根据现有交巡警服务平台的工作量不均衡和有些地方出警时间过长的实际情况，拟在该区内再增加2至5个平台，请确定需要增加平台的具体个数和位置。
+        \item 问题四：针对全市（主城六区A，B，C，D，E，F）的具体情况，按照设置交巡警服务平台的原则和任务，分析研究该市现有交巡警服务平台设置方案（参见附件）的合理性。如果有明显不合理，请给出解决方案。
+        \item 问题五：如果该市地点P（第32个节点）处发生了重大刑事案件，在案发3分钟后接到报警，犯罪嫌疑人已驾车逃跑。为了快速搜捕嫌疑犯，请给出调度全市交巡警服务平台警力资源的最佳围堵方案。
+
+    \end{enumerate}
+
+    \section{问题分析}
+    \subsection{问题一分析}
+    对于问题一，为解决划分辖区这一问题，可从三分钟抵达入手，将其作为约束
+
+搜索
+    \subsection{问题二分析}
+    首先，这个是一个指派问题
+    \subsection{问题三分析}
+工作量判定，
+    \subsection{问题四分析}
+
+    \subsection{问题五分析}
+    对于该问题
+    \section{模型假设}
+    \begin{enumerate}[(1)]
+        \item 
+        \item 
+        \item 不考虑交通拥堵，假设各节点，路段通畅。
+        \item 假设
+    \end{enumerate}
+
+    \section{符号说明}
+\begin{center}
+    \setlength{\tabcolsep}{9mm}{
+        \begin{tabular}{ccc}
+            \specialrule{1.2pt}{0pt}{0pt} % 设置顶部粗线
+            \textbf{符号} & \textbf{意义} & \textbf{单位}\\
+            \midrule  % 设置中间横线
+            \textnormal{} & \textnormal{} & \textnormal{}\\
+            \textbf{符号} & \textbf{意义} & \textbf{单位}\\
+            \textnormal{} & \textnormal{} & \textnormal{}\\
+            \textbf{符号} & \textbf{意义} & \textbf{单位}\\
+
+            \specialrule{1.2pt}{0pt}{0pt} % 设置底部粗线
+        \end{tabular}
+    }
+\end{center}
+
+    \section{模型建立与求解}
+    \subsection{问题一模型的建立与求解}
+    \subsubsection{问题一模型的建立}
+针对这一问题建立了多种优化模型，
+    
+    \subsubsection{数据预处理}
+	
+考虑到
+
+数据结构
+
+将数据转为
+	\subsubsection{搜索模型的建立}
+为了
+
+    \begin{figure}[H] % [H] 表示强制当前位置插入图片
+        \centering % 使图片居中
+        \includegraphics[width=0.8\textwidth]{"./picture/map_with_number_A.png"} % 图片文件名及宽度调整
+        \caption{A区示意图} % 图片标题
+        \label{fig:example} % 图片标签
+    \end{figure}
+存在最优的区域划分，而此区域划分处于三公里车程范围内
+    \begin{figure}[H] % [H] 表示强制当前位置插入图片
+        \centering % 使图片居中
+        \includegraphics[width=0.8\textwidth]{"F:/Git/2012_B/papers/paper picture/wset_wall_C1_9C2_0C6_68.png"} % 图片文件名及宽度调整
+        \caption{西墙} % 图片标题
+        \label{fig:example} % 图片标签
+    \end{figure}
+
+	\subsubsection{去除重叠区域与进行优化}
+
+	\subsubsection{结果的检验}
+	\subsubsection{问题的结论}
+    \subsection{问题二模型的建立与求解}
+
+
+\subsubsection{问题一的模型建立与求解}
+\subsubsection{数据预处理}
+\subsubsection{模型建立}
+\subsubsection{模型建立的数学思想}
+\subsubsection{模型建立的准备}
+\subsubsection{模型的求解}
+\subsubsection{模型求解的数学原理}
+\subsubsection{模型求解的准备}
+\subsubsection{模型求解的过程}
+\subsubsection{模型求解的结果}
+\subsubsection{结果的检验}
+\subsubsection{问题的结论}
+\subsubsection{模型检验与分析}
+\subsubsection{误差分析}
+\subsubsection{灵敏度分析}
+\subsubsection{稳定性分析}
+\subsubsection{小结}
+    \subsection{问题三模型的建立与求解}
+\subsubsection{数据预处理}
+\subsubsection{模型建立}
+\subsubsection{模型建立的数学思想}
+\subsubsection{模型建立的准备}
+\subsubsection{模型的求解}
+\subsubsection{模型求解的数学原理}
+\subsubsection{模型求解的准备}
+\subsubsection{模型求解的过程}
+\subsubsection{模型求解的结果}
+\subsubsection{结果的检验}
+\subsubsection{问题的结论}
+\subsubsection{模型检验与分析}
+\subsubsection{误差分析}
+\subsubsection{灵敏度分析}
+\subsubsection{稳定性分析}
+\subsubsection{小结}
+    \subsection{问题四模型的建立与求解}
+\subsubsection{数据预处理}
+\subsubsection{模型建立}
+\subsubsection{模型建立的数学思想}
+\subsubsection{模型建立的准备}
+\subsubsection{模型的求解}
+\subsubsection{模型求解的数学原理}
+\subsubsection{模型求解的准备}
+\subsubsection{模型求解的过程}
+\subsubsection{模型求解的结果}
+\subsubsection{结果的检验}
+\subsubsection{问题的结论}
+\subsubsection{模型检验与分析}
+\subsubsection{误差分析}
+\subsubsection{灵敏度分析}
+\subsubsection{稳定性分析}
+\subsubsection{小结}
+    \subsection{问题五模型的建立与求解}
+    \begin{thebibliography}{9} % 参考文献
+		\bibitem{bib:8}何晓群.多元统计分析.北京：中国人民大学出版社，2012.
+		\bibitem{bib:9}徐维超. 相关系数研究综述[J]. 广东工业大学学报,2012,29(3):12-17.
+    \end{thebibliography}
+
+    \newpage
+    \section{附录}
+    %插入代码内容
+\begin{lstlisting}
+		\end{lstlisting}
+\end{document}       
