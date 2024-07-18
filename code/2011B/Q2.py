@@ -108,14 +108,6 @@ if best_flow_dict is None:
 # 找到最优匹配对
 matching_pairs = previous_matching_pairs
 
-# 计算每一个匹配对的时间
-matching_pairs_with_time = []
-for platform, entry_exit in matching_pairs:
-    time = calculate_shortest_path_distance(G, platform, entry_exit)
-    matching_pairs_with_time.append((platform, entry_exit, time))
-
 # 输出最优时间和匹配对
 print("最优时间:", best_time)
-print("匹配对及时间:")
-for match in matching_pairs_with_time:
-    print(f"平台 {match[0]} 到 出入口 {match[1]} 的时间: {match[2]}")
+print("匹配对:", matching_pairs)
