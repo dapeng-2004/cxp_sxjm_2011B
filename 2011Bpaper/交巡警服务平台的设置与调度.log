@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.25)  16 JUL 2024 09:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.25)  18 JUL 2024 19:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -584,11 +584,7 @@ File: UTF8.enc 2021/10/16 4.8.5
 (f:/latex/texlive/2024/texmf-dist/tex/latex/cjk/texinput/UTF8/UTF8.chr
 File: UTF8.chr 2021/10/16 4.8.5
 )
-(./交巡警服务平台的设置与调度.aux
-
-LaTeX Warning: Label `fig:example' multiply defined.
-
-)
+No file 交巡警服务平台的设置与调度.aux.
 \openout1 = `交巡警服务平台的设置与调度.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
@@ -670,7 +666,7 @@ LaTeX Font Info:    ... okay on input line 42.
 LaTeX Font Info:    Checking defaults for C62/song/m/n on input line 42.
 LaTeX Font Info:    ... okay on input line 42.
 \c@lstlisting=\count322
- (f:/latex/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+(f:/latex/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count323
 \scratchdimen=\dimen267
@@ -825,27 +821,7 @@ Package geometry Warning: `a4paper': not available in `\newgeometry'; skipped.
 LaTeX Font Warning: Font shape `OMX/cmex/m/n' in size <10.53937> not available
 (Font)              size <10.95> substituted on input line 108.
 
-<./picture/map_with_number_A.png, id=163, 2168.1pt x 2168.1pt>
-File: ./picture/map_with_number_A.png Graphic file (type png)
-<use ./picture/map_with_number_A.png>
-Package pdftex.def Info: ./picture/map_with_number_A.png  used on input line 13
-9.
-(pdftex.def)             Requested size: 333.24028pt x 333.24002pt.
-[3]
-<F:/Git/2012_B/papers/paper picture/wset_wall_C1_9C2_0C6_68.png, id=189, 1084.0
-5pt x 404.712pt>
-File: F:/Git/2012_B/papers/paper picture/wset_wall_C1_9C2_0C6_68.png Graphic fi
-le (type png)
-<use F:/Git/2012_B/papers/paper picture/wset_wall_C1_9C2_0C6_68.png>
-Package pdftex.def Info: F:/Git/2012_B/papers/paper picture/wset_wall_C1_9C2_0C
-6_68.png  used on input line 146.
-(pdftex.def)             Requested size: 333.24028pt x 124.4096pt.
- [4 <./picture/map_with_number_A.png> <f:/Git/2012_B/papers/paper picture/wset_
-wall_C1_9C2_0C6_68.png>]
-Overfull \vbox (654.70743pt too high) has occurred while \output is active []
-
-
-[5] [6] [7] (./交巡警服务平台的设置与调度.aux)
+[3] [4] [5] [6] [7] [8] (./交巡警服务平台的设置与调度.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/07/14>
@@ -856,17 +832,17 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.41063pt have occurred.
 
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 14456 strings out of 474116
- 261217 string characters out of 5744699
+ 14494 strings out of 474116
+ 261279 string characters out of 5744699
  1951190 words of memory out of 5000000
- 36289 multiletter control sequences out of 15000+600000
- 611194 words of font info for 249 fonts, out of 8000000 for 9000
+ 36327 multiletter control sequences out of 15000+600000
+ 611464 words of font info for 250 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,7n,83p,1036b,470s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 80i,6n,83p,1036b,470s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/s
 imhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows
 /Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:
@@ -876,15 +852,15 @@ s/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Wind
 ows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf>
 <c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/sim
 hei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/F
-onts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/W
+onts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/W
 indows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.t
-tf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/
-simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Window
+tf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/
+simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Window
 s/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c
 :/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsu
 n.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fon
-ts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Win
-dows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc
+ts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Win
+dows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc
 ><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/si
 msun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/
 Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/
@@ -892,10 +868,10 @@ Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.
 ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts
 /simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windo
 ws/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><
-c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simh
+c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simh
 ei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fo
 nts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Wi
-ndows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.tt
+ndows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.tt
 c><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/s
 imsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows
 /Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:
@@ -904,19 +880,19 @@ imsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows
 s/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Wind
 ows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc>
 <c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/sim
-sun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/F
-onts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/W
+sun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/F
+onts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/W
 indows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.t
 tc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/
-simsun.ttc><c:/Windows/Fonts/simsun.ttc><f:/latex/texlive/2024/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmbx10.pfb><f:/latex/texlive/2024/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmbx12.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr10.pfb>
-Output written on 交巡警服务平台的设置与调度.pdf (7 pages, 1813115
- bytes).
+simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><f:/latex/
+texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><f:/latex/tex
+live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><f:/latex/texliv
+e/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+Output written on 交巡警服务平台的设置与调度.pdf (8 pages, 499318 
+bytes).
 PDF statistics:
- 574 PDF objects out of 1000 (max. 8388607)
- 367 compressed objects within 4 object streams
+ 576 PDF objects out of 1000 (max. 8388607)
+ 371 compressed objects within 4 object streams
  0 named destinations out of 1000 (max. 500000)
- 26919 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 26909 words of extra memory for PDF output out of 29859 (max. 10000000)
 

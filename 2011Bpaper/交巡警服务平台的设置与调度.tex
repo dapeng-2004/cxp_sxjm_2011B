@@ -134,20 +134,36 @@
 	\subsubsection{搜索模型的建立}
 为了
 
-    \begin{figure}[H] % [H] 表示强制当前位置插入图片
-        \centering % 使图片居中
-        \includegraphics[width=0.8\textwidth]{"./picture/map_with_number_A.png"} % 图片文件名及宽度调整
-        \caption{A区示意图} % 图片标题
-        \label{fig:example} % 图片标签
-    \end{figure}
-存在最优的区域划分，而此区域划分处于三公里车程范围内
-    \begin{figure}[H] % [H] 表示强制当前位置插入图片
-        \centering % 使图片居中
-        \includegraphics[width=0.8\textwidth]{"F:/Git/2012_B/papers/paper picture/wset_wall_C1_9C2_0C6_68.png"} % 图片文件名及宽度调整
-        \caption{西墙} % 图片标题
-        \label{fig:example} % 图片标签
-    \end{figure}
 
+    %\begin{figure}[H] % [H] 表示强制当前位置插入图片
+        %\centering % 使图片居中
+        %\includegraphics[width=0.8\textwidth]{"./picture/map_with_number_A.png"} % 图片文件名及宽度调整
+        %\caption{A区示意图} % 图片标题
+        %\label{fig:example} % 图片标签
+    %\end{figure}
+存在最优的区域划分，而此区域划分处于三公里车程范围内
+
+
+
+为满足题设先将三公里
+
+利用递归，搜索出3km路程内的点集，并将其标示在图上
+    %\begin{figure}[H] % [H] 表示强制当前位置插入图片
+        %\centering % 使图片居中
+        %\includegraphics[width=0.8\textwidth]{"F:/Git/2012_B/papers/paper picture/wset_wall_C1_9C2_0C6_68.png"} % 图片文件名及宽度调整
+        %\caption{3km分配图} % 图片标题
+        %\label{fig:example} % 图片标签
+    %\end{figure}
+
+	\subsubsection{工作量函数的建立}
+工作量由工作时间决定，即出警时间与办案时间，其中，出警时间是（路程/速度）*时间，出警时间由所调查资料可知，平均时长为30分钟。
+	\subsubsection{扩散算法}
+\begin{enumerate}
+\item 定位每一个交巡警服务平台，对所有平台，以相同速率进行扩散搜索，直到搜索到第一个路口节点。
+\item 搜索到第一个路口节点后，进行工作量函数的计算，根据计算结果，调整该交巡警平台的扩散搜索速率。
+\item 继续重复此循环，直到3km内所有路口节点被搜索完毕，程序终止。
+\end{enumerate}
+优点在于无需去除重叠区域且工作量分配更加均匀。
 	\subsubsection{去除重叠区域与进行优化}
 
 	\subsubsection{结果的检验}
@@ -155,11 +171,25 @@
     \subsection{问题二模型的建立与求解}
 
 
-\subsubsection{问题一的模型建立与求解}
 \subsubsection{数据预处理}
-\subsubsection{模型建立}
+
+\subsubsection{问题二的模型建立}
+
 \subsubsection{模型建立的数学思想}
 \subsubsection{模型建立的准备}
+通过对于A区路口与交巡警平台布局的观察，可以发现，大部分出入城区的路口节点在西部地区，而大部分交巡警平台却在东部地区，为此采用分布优化的策略，先满足东部封锁入城区的路口节点的需求，再，考虑西部地区的问题。
+\begin{enumerate}
+\item 分区策略：
+\item 解决东区分配需求：
+\item 西部二次分区：
+\item 解决西区分配需求：
+
+
+
+\end{enumerate}
+
+	为了减小计算量，首先对A区进行分区，通过计算A区交巡警平台与出入口节点中心，可知交巡警平台中心位置：横坐标为 334.0，纵坐标为 343.67。
+出入口节点中心位置：横坐标为 281.15，纵坐标为 322.08。我们可基于此
 \subsubsection{模型的求解}
 \subsubsection{模型求解的数学原理}
 \subsubsection{模型求解的准备}
@@ -178,6 +208,13 @@
 \subsubsection{模型建立的数学思想}
 \subsubsection{模型建立的准备}
 \subsubsection{模型的求解}
+\subsubsection{基于优化函数的扩散算法}
+\begin{enumerate}
+\item 定位每一个交巡警服务平台，对所有平台，以相同速率进行扩散搜索，直到搜索到第一个路口节点。
+\item 搜索到第一个路口节点后，进行工作量函数的计算，根据计算结果，调整该交巡警平台的扩散搜索速率。
+\item 继续重复此循环，直到3km内所有路口节点被搜索完毕，程序终止。
+\end{enumerate}
+优点在于无需去除重叠区域且工作量分配更加均匀。
 \subsubsection{模型求解的数学原理}
 \subsubsection{模型求解的准备}
 \subsubsection{模型求解的过程}
@@ -192,6 +229,8 @@
     \subsection{问题四模型的建立与求解}
 \subsubsection{数据预处理}
 \subsubsection{模型建立}
+	\subsubsection{工作量函数的建立}
+工作量由工作时间决定，即出警时间与办案时间，其中，出警时间是（路程/速度）*时间，出警时间由所调查资料可知，平均时长为30分钟。
 \subsubsection{模型建立的数学思想}
 \subsubsection{模型建立的准备}
 \subsubsection{模型的求解}
