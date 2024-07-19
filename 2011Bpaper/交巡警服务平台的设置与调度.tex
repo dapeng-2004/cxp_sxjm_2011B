@@ -9,6 +9,7 @@
 \usepackage{geometry}
 \usepackage{array}
 \usepackage{amsmath}
+\usepackage{amsfonts} % 神奇数学符号库
 \usepackage{subfigure} % 插入图片
 \usepackage{longtable}
 \usepackage{abstract}% 摘要
@@ -20,6 +21,8 @@
 \usepackage{float}% 固定图片或表格的位置
 \usepackage{gensymb}
 \usepackage{microtype}
+\usepackage{tikz}% 绘制流程图
+\usetikzlibrary{shapes.geometric, arrows}
 
 \geometry{a4paper,left=2.5cm,right=2.5cm,top=2cm,bottom=2cm}% 页边距
 \lstset{
@@ -34,6 +37,11 @@
     tabsize=4, % 设置tab空格数
     showspaces=false % 不显示空格
 }
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=red!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
 
 \title{交巡警服务平台的设置与调度}
 \date{}
@@ -83,13 +91,12 @@
 
     \section{问题分析}
     \subsection{问题一分析}
-    对于问题一，为解决划分辖区这一问题，可从三分钟抵达入手，将其作为约束
+    对于问题一，为解决划分辖区这一问题，需满足交巡警平台管辖的范围内出现突发事件时，尽量能在3分钟内抵达事发地这一条件，可从三分钟内抵达入手，将其作为约束条件，进行搜索，由此根据附图1中的交通网络，现有的二十个交巡警服务平台的设置情况示意图和附件2中的相关数据信息，划分管辖区域。
 
-搜索
     \subsection{问题二分析}
-    首先，这个是一个指派问题
+    首先，这个是一个指派问题，为解决需对进出该区的13条交通要道实现快速全封锁这一问题，需要通过调度全区警力资源以最快速度完成封锁。为此，我们需建立最优调度方案使这一目标最快实现。
     \subsection{问题三分析}
-工作量判定，
+	基于问题一已建立的扩散搜索模型，引入工作量判定函数，综合考虑A区每个交巡警平台范围内的路径长度与节点发案率，为使平台工作量均衡并且尽量保证出警时间在三分钟内，最终确定增加平台的位置与数目，以达到最优设置方案。
     \subsection{问题四分析}
 
     \subsection{问题五分析}
@@ -97,7 +104,7 @@
     \section{模型假设}
     \begin{enumerate}[(1)]
         \item 
-        \item 
+        \item 交巡警服务平台管辖范围不能重叠。
         \item 不考虑交通拥堵，假设各节点，路段通畅。
         \item 假设
     \end{enumerate}
@@ -122,18 +129,64 @@
     \section{模型建立与求解}
     \subsection{问题一模型的建立与求解}
     \subsubsection{问题一模型的建立}
-针对这一问题建立了多种优化模型，
+针对这一问题建立了多种模型，首先，进行文件读取与数据预处理，为解决划分辖区这一问题，需满足交巡警平台管辖的范围内出现突发事件时，尽量能在3分钟内抵达事发地这一条件，可从三分钟内抵达入手，将其作为约束条件，进行搜索，由此根据附图1中的交通网络，现有的二十个交巡警服务平台的设置情况示意图和附件2中的相关数据信息，划分管辖区域。
     
     \subsubsection{数据预处理}
-	
-考虑到
+	首先进行文件读取，将重要数据提取到列表中，进而计算连接节点间的欧几里得距离。接着根据区域名称获取点的详细数据，包括坐标、类别、是否为出入口点等信息。
+	考虑到点对间存在一定关系，构建点与点之间的连接，并包含点之间的距离信息。此时数据结构已从分散的数据转为集中的列表。
+	\subsubsection{Dijkstra算法的原理}
+设有一个图 \(G = (V, E)\)，其中 \(V\) 是节点集合，\(E\) 是边集合，权重函数 \(w: E \rightarrow \mathbb{R}^+\) 定义每条边的非负权重。起始节点为 \(s \)，目标是找到从 \(s \) 到所有其他节点的最短路径。
 
-数据结构
+1. 初始化：
+\[
+\forall v \in V, \text{dist}[v] = \infty
+\]
+\[
+\text{dist}[s] = 0
+\]
 
-将数据转为
-	\subsubsection{搜索模型的建立}
-为了
+2. 每次选择距离最小的未访问节点 \(u\)：
+\[
+u = \arg\min_{v \in Q} \text{dist}[v]
+\]
 
+3. 更新邻接节点的距离：
+对于每个邻接节点 \(v\)：
+\[
+\text{alt} = \text{dist}[u] + w(u, v)
+\]
+如果 \(\text{alt} < \text{dist}[v]\)，则：
+\[
+\text{dist}[v] = \text{alt}
+\]
+并更新前驱节点：
+\[
+\text{prev}[v] = u
+\]
+
+4. 重复上述过程，直到所有节点都被访问过。
+
+Dijkstra算法通过上述步骤有效地找到从源点到所有其他节点的最短路径，其时间复杂度在使用二叉堆实现优先队列时为 \(O((|E| + |V|) \log |V|)\)。
+
+	\subsubsection{指定深度的DFS模型的建立}
+为了得出平台3km距离内所有的路口，引入深度优先搜索模型：
+
+给定一个图 \( G = (V, E) \)，其中 \( V \) 是顶点集合，\( E \) 是边集合。DFS 算法的步骤如下：
+
+1. 初始化：标记所有节点为未访问状态。
+
+2. 选择起始节点：从起始节点 \( v \in V \) 开始搜索。
+
+3. 递归搜索：
+   \[
+   \text{DFS}(v) = 
+   \begin{cases} 
+   \text{visited}(v) = \text{true}, & \text{if } v \text{ is the starting node} \\
+   \text{DFS}(u), & \text{for each neighbor } u \text{ of } v \text{ and } \text{visited}(u) = \text{false}
+   \end{cases}
+   \]
+	\subsubsection{去除重叠区域与进行优化}
+	由于深度优先搜索算法有可能使某些路口无人管辖与邻近交巡警服务平台的管辖区域存在重叠，而在现实中，不同警局的执法范围一般不会重叠，为避免此现象发生，需要对该模型进行优化。
 
     %\begin{figure}[H] % [H] 表示强制当前位置插入图片
         %\centering % 使图片居中
@@ -141,6 +194,7 @@
         %\caption{A区示意图} % 图片标题
         %\label{fig:example} % 图片标签
     %\end{figure}
+
 存在最优的区域划分，而此区域划分处于三公里车程范围内
 
 
@@ -155,46 +209,204 @@
         %\label{fig:example} % 图片标签
     %\end{figure}
 
-	\subsubsection{工作量函数的建立}
-工作量由工作时间决定，即出警时间与办案时间，其中，出警时间是（路程/速度）*时间，出警时间由所调查资料可知，平均时长为30分钟。
-	\subsubsection{扩散算法}
+为此引入扩散搜索模型。
+	\subsubsection{扩散模型的引入}
 \begin{enumerate}
 \item 定位每一个交巡警服务平台，对所有平台，以相同速率进行扩散搜索，直到搜索到第一个路口节点。
 \item 搜索到第一个路口节点后，进行工作量函数的计算，根据计算结果，调整该交巡警平台的扩散搜索速率。
 \item 继续重复此循环，直到3km内所有路口节点被搜索完毕，程序终止。
 \end{enumerate}
+
+\begin{tikzpicture}[node distance=2cm]
+
+\node (start) [startstop] {开始};
+\node (locate) [process, below of=start] {定位交巡警服务平台};
+\node (search) [process, below of=locate] {以相同速率扩散搜索};
+\node (find) [decision, below of=search, yshift=-1cm] {搜索到第一个路口节点?};
+\node (compute) [process, below of=find, yshift=-1cm] {计算工作量函数并调整搜索速率};
+\node (repeat) [process, below of=compute] {继续循环搜索};
+\node (within) [decision, below of=repeat, yshift=-1cm] {3km内所有路口节点被搜索完毕?};
+\node (stop) [startstop, below of=within, yshift=-1cm] {程序终止};
+
+\draw [arrow] (start) -- (locate);
+\draw [arrow] (locate) -- (search);
+\draw [arrow] (search) -- (find);
+\draw [arrow] (find) -- node[anchor=east] {是} (compute);
+\draw [arrow] (find.east) -- ++(1.5,0) |- node[anchor=north] {否} (repeat);
+\draw [arrow] (compute) -- (repeat);
+\draw [arrow] (repeat) -- (within);
+\draw [arrow] (within) -- node[anchor=east] {是} (stop);
+\draw [arrow] (within.east) -- ++(1.5,0) |- node[anchor=north] {否} (repeat);
+
+\end{tikzpicture}
+
+\begin{enumerate}
+    \item \textbf{定位每一个交巡警服务平台}：
+    
+    设交巡警服务平台集合为 \( P = \{ p_1, p_2, \ldots, p_m \} \)，
+    路口节点集合为 \( N = \{ n_1, n_2, \ldots, n_n \} \)。
+    
+    \item \textbf{以相同速率进行扩散搜索，直到搜索到第一个路口节点}：
+    
+    对每一个交巡警服务平台 \( p_i \in P \)，设初始搜索速率为 \( v_0 \)，
+    在时间 \( t \) 内的搜索半径为 \( r_i(t) = v_0 \cdot t \)。
+    搜索半径 \( r_i \) 满足：
+    \[
+    r_i(t) = \min \{ r \mid \exists n_j \in N, \text{dist}(p_i, n_j) \leq r \}
+    \]
+    
+    \item \textbf{搜索到第一个路口节点后，进行工作量函数的计算，根据计算结果调整该交巡警平台的扩散搜索速率}：
+    
+    设工作量函数为 \( W(p_i) \)，则新的搜索速率 \( v_i \) 为：
+    \[
+    v_i = f(W(p_i))
+    \]
+    其中，函数 \( f \) 根据具体工作量计算结果调整搜索速率。
+    
+    \item \textbf{继续重复此循环，直到3km内所有路口节点被搜索完毕，程序终止}：
+    
+    设搜索终止距离为 \( R = 3 \) km，
+    程序在满足以下条件时终止：
+    \[
+    \forall n_j \in N, \text{dist}(p_i, n_j) \leq R \text{ for some } p_i \in P
+    \]
+\end{enumerate}
+
 优点在于无需去除重叠区域且工作量分配更加均匀。
-	\subsubsection{去除重叠区域与进行优化}
+
+放张图
+
+加表格
 
 	\subsubsection{结果的检验}
+
 	\subsubsection{问题的结论}
     \subsection{问题二模型的建立与求解}
 
-
-\subsubsection{数据预处理}
-
 \subsubsection{问题二的模型建立}
+	为解决问题二这一指派问题，需对进出该区的13条交通要道实现快速全封锁，通过调度全区警力资源以最快速度完成封锁。为此，我们需建立最优调度方案使这一目标最快实现。
 
-\subsubsection{模型建立的数学思想}
-\subsubsection{模型建立的准备}
-通过对于A区路口与交巡警平台布局的观察，可以发现，大部分出入城区的路口节点在西部地区，而大部分交巡警平台却在东部地区，为此采用分布优化的策略，先满足东部封锁入城区的路口节点的需求，再，考虑西部地区的问题。
-\begin{enumerate}
-\item 分区策略：
-\item 解决东区分配需求：
-\item 西部二次分区：
-\item 解决西区分配需求：
+为实现对进出该区的13条交通要道实现快速全封锁，将这一问题转化为指派问题，即指派交巡警服务平台到交通要道，目标为封锁完成的时间最短。据此建立最大流二分查找模型，规划出最佳封锁方案。
+\subsubsection{最大流算法的模型建立}
+%通过对于A区路口与交巡警平台布局的观察，可以发现，大部分出入城区的路口节点在西部地区，而大部分交巡警平台却在东部地区，为此采用分布优化的策略，先满足东部封锁入城区的路口节点的需求，再，考虑西部地区的问题。
+%\begin{enumerate}
+%\item 分区策略：
+%\item 解决东区分配需求：
+%\item 西部二次分区：
+%\item 解决西区分配需求：
+%\end{enumerate}
 
+	%为了减小计算量，首先对A区进行分区，通过计算A区交巡警平台与出入口节点中心，可知交巡警平台中心位置：横坐标为 334.0，纵坐标为 343.67。出入口节点中心位置：横坐标为 281.15，纵坐标为 322.08。我们可基于此
 
+最大流问题是在给定一个源点（source）和汇点（sink）的流网络中，找到从源点到汇点的最大流量。网络中每条边都有一个容量限制，表示该边能通过的最大流量。最大流算法的目标是找到一种流量分配方式，使得从源点到汇点的总流量最大。
 
-\end{enumerate}
+流量守恒约束
 
-	为了减小计算量，首先对A区进行分区，通过计算A区交巡警平台与出入口节点中心，可知交巡警平台中心位置：横坐标为 334.0，纵坐标为 343.67。
-出入口节点中心位置：横坐标为 281.15，纵坐标为 322.08。我们可基于此
+在网络的每个节点 \(v\)（除了源点和汇点）处，流量守恒原则要求：
+\[
+\sum_{u \in V} f(u, v) = \sum_{w \in V} f(v, w)
+\]
+其中，\(f(u, v)\) 表示从节点 \(u\) 到节点 \(v\) 的流量，\(V\) 表示节点集合。
+
+边容量约束
+
+每条边的流量不能超过其容量限制：
+\[
+0 \leq f(u, v) \leq c(u, v)
+\]
+其中，\(c(u, v)\) 表示边 \( (u, v) \) 的容量。
+
+最大流量
+
+最大流问题的目标是最大化从源点 \( s \) 到汇点 \( t \) 的总流量 \( |f| \)：
+\[
+\max |f| = \sum_{v \in V} f(s, v)
+\]
+
+二分查找法
+
+二分查找法是一种在有序数组中查找目标值的高效算法。其基本思想是通过逐步缩小查找范围，将问题规模减半，直到找到目标值或确定目标值不存在。
+
+二分查找算法步骤
+
+1. 初始化左右边界 \( T_{\min} \) 和 \( T_{\max} \)。
+
+2. 计算中点 \( T_{\text{mid}} \)：
+\[
+T_{\text{mid}} = \frac{T_{\min} + T_{\max}}{2}
+\]
+
+3. 判断 \( T_{\text{mid}} \) 是否满足条件。如果满足，则更新右边界：
+\[
+T_{\max} = T_{\text{mid}}
+\]
+否则，更新左边界：
+\[
+T_{\min} = T_{\text{mid}}
+\]
+
+4. 重复步骤2和3，直到左右边界足够接近。
+
+最大流二分查找法结合
+
+我们通过二分查找法找到一个最小的时间 \( T \)，使得在此时间内警察能够封锁所有关键交通要道。对于每个给定的 \( T \)，通过最大流算法判断是否能满足封锁要求。
+
+\subsubsection*{数学模型}
+目标函数：
+\[
+\min T
+\]
+
+约束条件：
+\[
+\begin{aligned}
+\text{s.t.} \quad & \left\{
+\begin{aligned}
+& \sum_{i \in P} x_{ij} \geq 1, && \forall j \in K \\
+& \sum_{j \in K} x_{ij} \leq 1, && \forall i \in P \\
+& x_{ij} \cdot d_{ij} \leq T, && \forall i \in P, \forall j \in K \\
+& \text{flow}(T) \geq |K|
+\end{aligned}
+\right.
+\end{aligned}
+\]
+
+其中，\( P \) 为警察局集合，\( K \) 为关键交通要道集合，\( d_{ij} \) 为警察局 \( i \) 到路口 \( j \) 的时间，\( x_{ij} \) 为二元决策变量，表示是否由警察局 \( i \) 封锁路口 \( j \)。
+
 \subsubsection{模型的求解}
 \subsubsection{模型求解的数学原理}
+\begin{equation}
+\begin{aligned}
+& \min T \\
+& \text{s.t.} \\
+& \left\{
+\begin{aligned}
+& \sum_{i \in P} x_{ij} \geq 1, && \forall j \in K \\
+& \sum_{j \in K} x_{ij} \leq 1, && \forall i \in P \\
+& x_{ij} \cdot d_{ij} \leq T, && \forall i \in P, \forall j \in K \\
+& \text{flow}(T) \geq |K|
+\end{aligned}
+\right.
+\end{aligned}
+\end{equation}
 \subsubsection{模型求解的准备}
 \subsubsection{模型求解的过程}
 \subsubsection{模型求解的结果}
+
+匹配对: [(2, 16), (4, 48), (7, 29), (8, 30), (10, 12), (11, 24), (12, 22), (13, 23), (14, 21), (15, 28), (16, 14), (19, 38), (20, 62)]
+
+\begin{center}
+\begin{tabular}{ccccccc}
+\toprule
+A & B & C & D & E & F & G \\
+A & B & C & D & E & F & G \\
+\midrule
+A & B & C & D & E & F & G \\
+1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
 \subsubsection{结果的检验}
 \subsubsection{问题的结论}
 \subsubsection{模型检验与分析}
@@ -208,6 +420,8 @@
 \subsubsection{模型建立的数学思想}
 \subsubsection{模型建立的准备}
 \subsubsection{模型的求解}
+\subsubsection{工作量函数的建立}
+工作量由工作时间决定，即出警时间与办案时间，其中，出警时间是（路程/速度）*时间，出警时间由所调查资料可知，平均时长为30分钟。
 \subsubsection{基于优化函数的扩散算法}
 \begin{enumerate}
 \item 定位每一个交巡警服务平台，对所有平台，以相同速率进行扩散搜索，直到搜索到第一个路口节点。
@@ -246,6 +460,10 @@
 \subsubsection{稳定性分析}
 \subsubsection{小结}
     \subsection{问题五模型的建立与求解}
+\subsubsection{模型建立}
+\subsubsection{模型建立的数学思想}
+\subsubsection{模型建立的准备}
+\subsubsection{模型的求解}
     \begin{thebibliography}{9} % 参考文献
 		\bibitem{bib:8}何晓群.多元统计分析.北京：中国人民大学出版社，2012.
 		\bibitem{bib:9}徐维超. 相关系数研究综述[J]. 广东工业大学学报,2012,29(3):12-17.
