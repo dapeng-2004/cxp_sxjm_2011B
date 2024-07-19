@@ -257,14 +257,6 @@ Dijkstra算法通过上述步骤有效地找到从源点到所有其他节点的
     r_i(t) = \min \{ r \mid \exists n_j \in N, \text{dist}(p_i, n_j) \leq r \}
     \]
     
-    \item \textbf{搜索到第一个路口节点后，进行工作量函数的计算，根据计算结果调整该交巡警平台的扩散搜索速率}：
-    
-    设工作量函数为 \( W(p_i) \)，则新的搜索速率 \( v_i \) 为：
-    \[
-    v_i = f(W(p_i))
-    \]
-    其中，函数 \( f \) 根据具体工作量计算结果调整搜索速率。
-    
     \item \textbf{继续重复此循环，直到3km内所有路口节点被搜索完毕，程序终止}：
     
     设搜索终止距离为 \( R = 3 \) km，
@@ -455,13 +447,28 @@ A13 & A14 & A15 & A16 & A19 & A20\\
 \subsubsection{稳定性分析}
 \subsubsection{小结}
     \subsection{问题三模型的建立与求解}
-\subsubsection{数据预处理}
 \subsubsection{模型建立}
+基于问题一已建立的扩散搜索模型，引入工作量判定函数，综合考虑A区每个交巡警平台范围内的路径长度与节点发案率，为使平台工作量均衡并且尽量保证出警时间在三分钟内，最终确定增加平台的位置与数目，以达到最优设置方案。
 \subsubsection{模型建立的数学思想}
 \subsubsection{模型建立的准备}
 \subsubsection{模型的求解}
 \subsubsection{工作量函数的建立}
 工作量由工作时间决定，即出警时间与办案时间，其中，出警时间是（路程/速度）*时间，出警时间由所调查资料可知，平均时长为30分钟。
+
+要计算警察完成附近路口任务的总工作量，我们可以定义如下的工作量函数 \( W \)，综合考虑多个因素：
+
+\begin{equation}
+    W = \sum_{i=1}^{N} \left( R_i \times T_{\text{case}} + 2 \times \frac{D_i}{V} \right)
+\end{equation}
+
+其中：
+\begin{itemize}
+    \item \( N \) 是路口数量
+    \item \( R_i \) 是第 \( i \) 个路口的发案率
+    \item \( T_{\text{case}} \) 是处理每个案件的固定时间，设为 30 分钟（0.5 小时）
+    \item \( V \) 是警察行进的速度（单位：公里/小时）
+    \item \( D_i \) 是从起点到第 \( i \) 个路口的距离（单位：公里）
+\end{itemize}
 \subsubsection{基于优化函数的扩散算法}
 \begin{enumerate}
 \item 定位每一个交巡警服务平台，对所有平台，以相同速率进行扩散搜索，直到搜索到第一个路口节点。
@@ -469,6 +476,37 @@ A13 & A14 & A15 & A16 & A19 & A20\\
 \item 继续重复此循环，直到3km内所有路口节点被搜索完毕，程序终止。
 \end{enumerate}
 优点在于无需去除重叠区域且工作量分配更加均匀。
+\begin{enumerate}
+    \item \textbf{定位每一个交巡警服务平台}：
+    
+    设交巡警服务平台集合为 \( P = \{ p_1, p_2, \ldots, p_m \} \)，
+    路口节点集合为 \( N = \{ n_1, n_2, \ldots, n_n \} \)。
+    
+    \item \textbf{以相同速率进行扩散搜索，直到搜索到第一个路口节点}：
+    
+    对每一个交巡警服务平台 \( p_i \in P \)，设初始搜索速率为 \( v_0 \)，
+    在时间 \( t \) 内的搜索半径为 \( r_i(t) = v_0 \cdot t \)。
+    搜索半径 \( r_i \) 满足：
+    \[
+    r_i(t) = \min \{ r \mid \exists n_j \in N, \text{dist}(p_i, n_j) \leq r \}
+    \]
+    
+    \item \textbf{搜索到第一个路口节点后，进行工作量函数的计算，根据计算结果调整该交巡警平台的扩散搜索速率}：
+    
+    设工作量函数为 \( W(p_i) \)，则新的搜索速率 \( v_i \) 为：
+    \[
+    v_i = f(W(p_i))
+    \]
+    其中，函数 \( f \) 根据具体工作量计算结果调整搜索速率。
+    
+    \item \textbf{继续重复此循环，直到3km内所有路口节点被搜索完毕，程序终止}：
+    
+    设搜索终止距离为 \( R = 3 \) km，
+    程序在满足以下条件时终止：
+    \[
+    \forall n_j \in N, \text{dist}(p_i, n_j) \leq R \text{ for some } p_i \in P
+    \]
+\end{enumerate}
 \subsubsection{模型求解的数学原理}
 \subsubsection{模型求解的准备}
 \subsubsection{模型求解的过程}

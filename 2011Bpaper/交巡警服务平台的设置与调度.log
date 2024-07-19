@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.25)  19 JUL 2024 14:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.25)  19 JUL 2024 15:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1154,19 +1154,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 248--250
 
  []
 
-[5] [6] [7] [8] [9] [10] [11] [12] [13] [14]
-(./交巡警服务平台的设置与调度.aux)
+[5] [6] [7] [8] [9]
+Overfull \hbox (10.00034pt too wide) in paragraph at lines 482--484
+[]\C70/rm/m/n/10.53937/8b � \C70/rm/m/n/10.53937/4e � \C70/rm/m/n/10.53937/5d �
+ \C70/rm/m/n/10.53937/8b f \C70/rm/m/n/10.53937/67 ^^M \C70/rm/m/n/10.53937/52 
+� \C70/rm/m/n/10.53937/5e s \C70/rm/m/n/10.53937/53 � \C70/rm/m/n/10.53937/96 �
+ \C70/rm/m/n/10.53937/54 ^^H \C70/rm/m/n/10.53937/4e : $\OML/cmm/m/it/10.53937 
+P \OT1/cmr/m/n/10.53937 (-20) = \OMS/cmsy/m/n/10.53937 f\OML/cmm/m/it/10.53937 
+p[]; p[]; [] ; p[]\OMS/cmsy/m/n/10.53937 g$|\C70/rm/m/n/10.53937/ff ^^L| \C70/r
+m/m/n/10.53937/8d � \C70/rm/m/n/10.53937/53 � \C70/rm/m/n/10.53937/82 � \C70/rm
+/m/n/10.53937/70 � \C70/rm/m/n/10.53937/96 � \C70/rm/m/n/10.53937/54 ^^H \C70/r
+m/m/n/10.53937/4e : $\OML/cmm/m/it/10.53937 N \OT1/cmr/m/n/10.53937 (-20) = \OM
+S/cmsy/m/n/10.53937 f\OML/cmm/m/it/10.53937 n[]; n[]; [] ; n[]\OMS/cmsy/m/n/10.
+53937 g$|\C70/rm/m/n/10.53937/30 ^^B|
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 482--484
+
+ []
+
+[10{f:/latex/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}
+] [11] [12] [13] [14] [15] (./交巡警服务平台的设置与调度.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/07/14>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 25961 strings out of 474116
- 516349 string characters out of 5744699
+ 25980 strings out of 474116
+ 516678 string characters out of 5744699
  1957190 words of memory out of 5000000
- 47530 multiletter control sequences out of 15000+600000
- 616797 words of font info for 275 fonts, out of 8000000 for 9000
+ 47543 multiletter control sequences out of 15000+600000
+ 617216 words of font info for 278 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  88i,16n,92p,1036b,658s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/s
@@ -1223,12 +1243,13 @@ st/fonts/type1/public/amsfonts/cm/cmr10.pfb><f:/latex/texlive/2024/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmr7.pfb><f:/latex/texlive/2024/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy10.pfb><f:/latex/texlive/2024/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmsy7.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1/p
-ublic/amsfonts/symbols/msbm10.pfb>
-Output written on 交巡警服务平台的设置与调度.pdf (14 pages, 632244
+ublic/amsfonts/symbols/msbm10.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1
+/public/cm-super/sfrm1000.pfb>
+Output written on 交巡警服务平台的设置与调度.pdf (15 pages, 644007
  bytes).
 PDF statistics:
- 666 PDF objects out of 1000 (max. 8388607)
- 432 compressed objects within 5 object streams
+ 675 PDF objects out of 1000 (max. 8388607)
+ 438 compressed objects within 5 object streams
  0 named destinations out of 1000 (max. 500000)
- 26921 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 28969 words of extra memory for PDF output out of 29859 (max. 10000000)
 
