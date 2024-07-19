@@ -501,7 +501,123 @@ A13 & A14 & A15 & A16 & A19 & A20\\
 \subsubsection{小结}
     \subsection{问题五模型的建立与求解}
 \subsubsection{模型建立}
-\subsubsection{模型建立的数学思想}
+\subsubsection{最大流算法的模型建立}
+%通过对于A区路口与交巡警平台布局的观察，可以发现，大部分出入城区的路口节点在西部地区，而大部分交巡警平台却在东部地区，为此采用分布优化的策略，先满足东部封锁入城区的路口节点的需求，再，考虑西部地区的问题。
+%\begin{enumerate}
+%\item 分区策略：
+%\item 解决东区分配需求：
+%\item 西部二次分区：
+%\item 解决西区分配需求：
+%\end{enumerate}
+
+	%为了减小计算量，首先对A区进行分区，通过计算A区交巡警平台与出入口节点中心，可知交巡警平台中心位置：横坐标为 334.0，纵坐标为 343.67。出入口节点中心位置：横坐标为 281.15，纵坐标为 322.08。我们可基于此
+
+最大流问题是在给定一个源点（source）和汇点（sink）的流网络中，找到从源点到汇点的最大流量。网络中每条边都有一个容量限制，表示该边能通过的最大流量。最大流算法的目标是找到一种流量分配方式，使得从源点到汇点的总流量最大。
+
+1.流量守恒约束
+
+在网络的每个节点 \(v\)（除了源点和汇点）处，流量守恒原则要求：
+\[
+\sum_{u \in V} f(u, v) = \sum_{w \in V} f(v, w)
+\]
+其中，\(f(u, v)\) 表示从节点 \(u\) 到节点 \(v\) 的流量，\(V\) 表示节点集合。
+
+2.边容量约束
+
+每条边的流量不能超过其容量限制：
+\[
+0 \leq f(u, v) \leq c(u, v)
+\]
+其中，\(c(u, v)\) 表示边 \( (u, v) \) 的容量。
+
+3.最大流量
+
+最大流问题的目标是最大化从源点 \( s \) 到汇点 \( t \) 的总流量 \( |f| \)：
+\[
+\max |f| = \sum_{v \in V} f(s, v)
+\]
+
+4.二分查找法
+
+二分查找法是一种在有序数组中查找目标值的高效算法。其基本思想是通过逐步缩小查找范围，将问题规模减半，直到找到目标值或确定目标值不存在。
+
+5.二分查找算法步骤
+
+（1） 初始化左右边界 \( T_{\min} \) 和 \( T_{\max} \)。
+
+（2） 计算中点 \( T_{\text{mid}} \)：
+\[
+T_{\text{mid}} = \frac{T_{\min} + T_{\max}}{2}
+\]
+
+（3） 判断 \( T_{\text{mid}} \) 是否满足条件。如果满足，则更新右边界：
+\[
+T_{\max} = T_{\text{mid}}
+\]
+否则，更新左边界：
+\[
+T_{\min} = T_{\text{mid}}
+\]
+
+（4） 重复步骤2和3，直到左右边界足够接近。
+
+6.最大流二分查找法结合
+
+我们通过二分查找法找到一个最小的时间 \( T \)，使得在此时间内警察能够封锁所有关键交通要道。对于每个给定的 \( T \)，通过最大流算法判断是否能满足封锁要求。
+
+7.具体数学模型
+
+目标函数：
+\[
+\min T
+\]
+
+约束条件：
+\[
+\begin{aligned}
+\text{s.t.} \quad & \left\{
+\begin{aligned}
+& \sum_{i \in P} x_{ij} \geq 1, && \forall j \in K \\
+& \sum_{j \in K} x_{ij} \leq 1, && \forall i \in P \\
+& x_{ij} \cdot d_{ij} \leq T, && \forall i \in P, \forall j \in K \\
+& \text{flow}(T) \geq |K|
+\end{aligned}
+\right.
+\end{aligned}
+\]
+
+其中，\( P \) 为警察局集合，\( K \) 为关键交通要道集合，\( d_{ij} \) 为警察局 \( i \) 到路口 \( j \) 的时间，\( x_{ij} \) 为二元决策变量，表示是否由警察局 \( i \) 封锁路口 \( j \)。
+
+\subsubsection{模型的求解}
+\begin{equation}
+\begin{aligned}
+& \min T \\
+& \text{s.t.} \\
+& \left\{
+\begin{aligned}
+& \sum_{i \in P} x_{ij} \geq 1, && \forall j \in K \\
+& \sum_{j \in K} x_{ij} \leq 1, && \forall i \in P \\
+& x_{ij} \cdot d_{ij} \leq T, && \forall i \in P, \forall j \in K \\
+& \text{flow}(T) \geq |K|
+\end{aligned}
+\right.
+\end{aligned}
+\end{equation}
+\subsubsection{模型求解的结果}
+
+匹配对: [(2, 16), (4, 48), (7, 29), (8, 30), (10, 12), (11, 24), (12, 22), (13, 23), (14, 21), (15, 28), (16, 14), (19, 38), (20, 62)]
+
+\begin{center}
+\begin{tabular}{ccccccc}
+\toprule
+A2 & A4 & A7 & A8 & A10 & A11 & A12 \\
+16 & 48 & C & D & E & F & G \\
+\midrule
+A13 & A14 & A15 & A16 & A19 & A20\\
+1 & 2 & 3 & 4 & 5 & 6\\
+\bottomrule
+\end{tabular}
+\end{center}
 \subsubsection{模型建立的准备}
 \subsubsection{模型的求解}
     \begin{thebibliography}{9} % 参考文献
