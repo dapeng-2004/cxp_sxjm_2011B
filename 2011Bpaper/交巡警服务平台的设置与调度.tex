@@ -54,21 +54,21 @@
 \vspace{-4em} % 调整标题上间距
 \begin{abstract}
 \normalsize
-本文针对问题，建立了回溯算法等多种模型，解决了交巡警服务平台的设置与调度问题。
+本文针对问题，建立了回溯算法，扩散算法，最大流二分查找，工作量函数等多种模型，解决了交巡警服务平台的设置与调度问题。
 
 针对问题一，首先读取文件并进行数据预处理，为解决划分辖区这一问题，需满足交巡警平台管辖的范围内出现突发事件时尽量能在3分钟内抵达事发地这一条件，可将交巡警平台在三分钟内抵达该路口节点作为约束条件。以交巡警平台作为起始点向外延伸三公里进行搜索，由此根据附图1中的交通网络所给出的二十个现有的交巡警服务平台的设置情况示意图和附件2中的相关数据信息，划分管辖区域。
 
 针对问题二，    为解决这一指派问题，需对进出该区的13条交通要道实现快速全封锁，通过调度全区警力资源以最快速度完成封锁。为此，我们需建立最优调度方案使这一目标最快实现。
-
 为实现对进出该区的13条交通要道快速全封锁，即指派交巡警服务平台到交通要道，目标为封锁完成的时间最短。据此建立最大流二分查找模型，规划出最佳封锁方案。
 
-针对问题三，基于问题一已建立的扩散搜索模型，引入工作量判定函数，综合考虑A区每个交巡警平台范围内的路径长度与节点发案率，将平台工作量均衡并且尽量保证出警时间在三分钟内作为优化目标，最终确定增加平台的位置与数目，以达到最优设置方案。
+针对问题三，基于问题一已建立的扩散搜索模型，引入工作量判定函数，综合考虑A区每个交巡警平台范围内的路径长度与节点发案率，将平台工作量均衡并且尽量保证出警时间在三分钟内作为优化目标，
+考虑增加不同平台数目的影响，最终确定增加平台的位置与数目，以达到最优设置方案。
 
-针对问题四，
+针对问题四，根据对原平台部署方案的分析，其部署方案存在同一区域交巡警平台重复部署，偏远地区未部署交巡警平台等问题。分别以该市所有路口节点为中心，计算该节点三公里内的总工作量，得到由各节点总工作量组成的列表，由大到小排序后，通过计算密度函数验证其基本服从卡方分布。基于减小方差的目的每次选取平台位置都选择最靠近平均数的节点，以保证在该次选取的数据集中方差最小。选取平台后，从可选点中扣除平台所在点及其三公里所有可选点，以避免平台管辖区域的冗余。之后在重新计算剩余各点工作量的平均数，重复以上步骤，直到选出八十个平台为止。
 
-针对问题五，
+针对问题五，基于问题二，先用扩散算法得出小偷的可能的逃跑区域，再调整递归回溯的最远距离，建立最大流模型并用二分查找进行求解，最终得出优化的围堵方案。满意结果是10.8分钟。
 
-\textbf{关键字}：
+\textbf{关键字}：扩散搜索模型，DFS，最大流二分法，工作量函数
 \end{abstract}
 \newpage
 
@@ -100,14 +100,16 @@
 	基于问题一已建立的扩散搜索模型，引入工作量判定函数，综合考虑A区每个交巡警平台范围内的路径长度与节点发案率，为使平台工作量均衡并且尽量保证出警时间在三分钟内，最终确定增加平台的位置与数目，以达到最优设置方案。
     \subsection{问题四分析}
 
+根据对原平台部署方案的分析，其部署方案存在同一区域交巡警平台重复部署，偏远地区未部署交巡警平台等问题。分别以该市所有路口节点为中心，计算该节点三公里内的总工作量，得到由各节点总工作量组成的列表，由大到小排序后，通过计算密度函数验证其基本服从卡方分布。基于减小方差的目的每次选取平台位置都选择最靠近平均数的节点，以保证在该次选取的数据集中方差最小。选取平台后，从可选点中扣除平台所在点及其三公里所有可选点，以避免平台管辖区域的冗余。之后在重新计算剩余各点工作量的平均数，重复以上步骤，直到选出八十个平台为止。
+
     \subsection{问题五分析}
-    对于该问题
+    对于该问题，看作与问题二类似的指派问题，在利用第一问的扩散算法，得出最小包围圈上的点后，转化为对这些点实现快速全封锁的问题，需要通过调度全区警力资源以最快速度完成封锁。为此，我们需建立最优调度方案使这一目标最快实现。
     \section{模型假设}
     \begin{enumerate}[(1)]
-        \item 
         \item 交巡警服务平台管辖范围不能重叠。
-        \item 不考虑交通拥堵，假设各节点，路段通畅。
+        \item 不考虑交通拥堵，假设各节点间路段通畅。
         \item 假设问题二中总平台数不可变。
+        \item 问题四中当嫌疑人抵达出城节点，则视为围堵失败。
     \end{enumerate}
 
     \section{符号说明}
@@ -117,10 +119,19 @@
             \specialrule{1.2pt}{0pt}{0pt} % 设置顶部粗线
             \textbf{符号} & \textbf{意义} & \textbf{单位}\\
             \midrule  % 设置中间横线
+            \textnormal{\(G\)} & \textnormal{} & \textnormal{}\\
+            \textnormal{\(V\)} & \textnormal{节点集合} & \textnormal{单位}\\
+            \textnormal{\(E\)} & \textnormal{边集合} & \textnormal{}\\
+            \textnormal{\(w\)} & \textnormal{权重函数} & \textnormal{}\\
+            \textnormal{\(s \)} & \textnormal{起始节点} & \textnormal{}\\
+            \textnormal{\(u\)} & \textnormal{未访问节点} & \textnormal{}\\
+            \textnormal{\(v\)} & \textnormal{邻接节点} & \textnormal{}\\
+            \textnormal{\(P\)} & \textnormal{交巡警服务平台} & \textnormal{}\\
             \textnormal{} & \textnormal{} & \textnormal{}\\
-            \textbf{符号} & \textbf{意义} & \textbf{单位}\\
-            \textnormal{} & \textnormal{} & \textnormal{}\\
-            \textbf{符号} & \textbf{意义} & \textbf{单位}\\
+            \textnormal{\( t \)} & \textnormal{时间} & \textnormal{分钟}\\
+            \textnormal{\(G\)} & \textnormal{} & \textnormal{}\\
+       
+
 
             \specialrule{1.2pt}{0pt}{0pt} % 设置底部粗线
         \end{tabular}
@@ -188,12 +199,12 @@ Dijkstra算法通过上述步骤有效地找到从源点到所有其他节点的
 
 4.利用递归，搜索出3km路程内的点集，并将其标示在图上。
 
-    %\begin{figure}[H] % [H] 表示强制当前位置插入图片
-        %\centering % 使图片居中
-        %\includegraphics[width=0.8\textwidth]{"./picture/map_with_number_A.png"} % 图片文件名及宽度调整
-        %\caption{A区示意图} % 图片标题
-        %\label{fig:example} % 图片标签
-    %\end{figure}
+    \begin{figure}[H] % [H] 表示强制当前位置插入图片
+        \centering % 使图片居中
+        \includegraphics[width=0.6\textwidth]{"./picture/Q1_origin.png"} % 图片文件名及宽度调整
+        \caption{A区未去重结果图} % 图片标题
+        \label{fig:example} % 图片标签
+    \end{figure}
 	\subsubsection{去除重叠区域与优化}
 	由于深度优先搜索算法有可能使某些路口无人管辖或邻近交巡警服务平台的管辖区域存在重叠，而在现实中，不同警局的执法范围一般不会重叠，为避免此现象发生，需要对该模型进行优化。
 
@@ -220,30 +231,37 @@ Dijkstra算法通过上述步骤有效地找到从源点到所有其他节点的
 	\subsubsection{扩散模型的引入}
 	定位每一个交巡警服务平台，对所有平台，以相同扩散速率进行搜索，若搜索到的节点未被其他平台添加到管辖区域内，则将其加入自己的管辖区。在每一轮增加搜索距离之前，计算各个平台工作量之和，根据计算结果，调整该交巡警平台的扩散搜索速率。重复此循环，直到3km内所有路口节点被搜索完毕，程序终止。
 
-\begin{center}
-\begin{tikzpicture}[node distance=2cm]
+%\begin{center}
+%\begin{tikzpicture}[node distance=2cm]
 
-\node (start) [startstop] {开始};
-\node (locate) [process, below of=start] {定位每个交巡警服务平台};
-\node (search) [process, below of=locate] {以相同扩散速率搜索};
-\node (find) [decision, below of=search, yshift=-1cm] {搜索到路口节点?};
-\node (compute) [process, below of=find, yshift=-1cm] {计算工作量函数并调整搜索速率};
-\node (repeat) [process, below of=compute] {继续循环搜索};
-\node (within) [decision, below of=repeat, yshift=-1cm] {节点被搜索完毕?};
-\node (stop) [startstop, below of=within, yshift=-1cm] {程序终止};
+%\node (start) [startstop] {开始};
+%\node (locate) [process, below of=start] {定位每个交巡警服务平台};
+%\node (search) [process, below of=locate] {以相同扩散速率搜索};
+%\node (find) [decision, below of=search, yshift=-1cm] {搜索到路口节点?};
+%\node (compute) [process, below of=find, yshift=-1cm] {计算工作量函数并调整搜索速率};
+%\node (repeat) [process, below of=compute] {继续循环搜索};
+%\node (within) [decision, below of=repeat, yshift=-1cm] {节点被搜索完毕?};
+%\node (stop) [startstop, below of=within, yshift=-1cm] {程序终止};
 
-\draw [arrow] (start) -- (locate);
-\draw [arrow] (locate) -- (search);
-\draw [arrow] (search) -- (find);
-\draw [arrow] (find) -- node[anchor=east] {是} (compute);
-\draw [arrow] (find.east) -- ++(1.5,0) |- node[anchor=south] {否} (repeat);
-\draw [arrow] (compute) -- (repeat);
-\draw [arrow] (repeat) -- (within);
-\draw [arrow] (within) -- node[anchor=east] {是} (stop);
-\draw [arrow] (within.east) -- ++(1.5,0) |- node[anchor=south] {否} (repeat);
+%\draw [arrow] (start) -- (locate);
+%\draw [arrow] (locate) -- (search);
+%\draw [arrow] (search) -- (find);
+%\draw [arrow] (find) -- node[anchor=east] {是} (compute);
+%\draw [arrow] (find.east) -- ++(1.5,0) |- node[anchor=south] {否} (repeat);
+%\draw [arrow] (compute) -- (repeat);
+%\draw [arrow] (repeat) -- (within);
+%\draw [arrow] (within) -- node[anchor=east] {是} (stop);
+%\draw [arrow] (within.east) -- ++(1.5,0) |- node[anchor=south] {否} (repeat);
 
-\end{tikzpicture}
-\end{center}
+%\end{tikzpicture}
+%end{center}
+
+    \begin{figure}[H] % [H] 表示强制当前位置插入图片
+        \centering % 使图片居中
+        \includegraphics[width=0.6\textwidth]{"./picture/liu.jpg"} % 图片文件名及宽度调整
+        \caption{问题一流程图} % 图片标题
+        \label{fig:example} % 图片标签
+    \end{figure}
 
 \begin{enumerate}
     \item \textbf{定位每一个交巡警服务平台}：
@@ -271,8 +289,12 @@ Dijkstra算法通过上述步骤有效地找到从源点到所有其他节点的
 
 优点在于无需去除重叠区域且到案时间更短。
 
-放张图！
-
+    \begin{figure}[H] % [H] 表示强制当前位置插入图片
+        \centering % 使图片居中
+        \includegraphics[width=0.6\textwidth]{"./picture/Q1 answer.png"} % 图片文件名及宽度调整
+        \caption{A区扩散算法结果图} % 图片标题
+        \label{fig:example} % 图片标签
+    \end{figure}
 
 	\subsubsection{结果的检验}
 	虽然任意平台无法在3分钟内抵达28，29，38，39，61，92这六个节点，但可通过延长搜索时间覆盖所有节点。
@@ -289,6 +311,8 @@ Dijkstra算法通过上述步骤有效地找到从源点到所有其他节点的
 \end{tabular}
 \end{center}
 	\subsubsection{问题的结论}
+以下为交巡警平台的管辖范围。
+
 \begin{center}
 \begin{tabular}{ccccccc}
 \toprule
@@ -343,6 +367,7 @@ A20 & 20、84、85、86、87、88、89、90、91、92\\
 \[
 \sum_{u \in V} f(u, v) = \sum_{w \in V} f(v, w)
 \]
+
 其中，\(f(u, v)\) 表示从节点 \(u\) 到节点 \(v\) 的流量，\(V\) 表示节点集合。
 
 2.边容量约束
@@ -351,6 +376,7 @@ A20 & 20、84、85、86、87、88、89、90、91、92\\
 \[
 0 \leq f(u, v) \leq c(u, v)
 \]
+
 其中，\(c(u, v)\) 表示边 \( (u, v) \) 的容量。
 
 3.最大流量
@@ -360,11 +386,13 @@ A20 & 20、84、85、86、87、88、89、90、91、92\\
 \max |f| = \sum_{v \in V} f(s, v)
 \]
 
-4.二分查找法
+
+\subsubsection{模型的求解}
+1.二分查找法
 
 二分查找法是一种在有序数组中查找目标值的高效算法。其基本思想是通过逐步缩小查找范围，将问题规模减半，直到找到目标值或确定目标值不存在。
 
-5.二分查找算法步骤
+2.二分查找算法步骤
 
 （1） 初始化左右边界 \( T_{\min} \) 和 \( T_{\max} \)。
 
@@ -377,18 +405,20 @@ T_{\text{mid}} = \frac{T_{\min} + T_{\max}}{2}
 \[
 T_{\max} = T_{\text{mid}}
 \]
+
 否则，更新左边界：
+
 \[
 T_{\min} = T_{\text{mid}}
 \]
 
 （4） 重复步骤2和3，直到左右边界足够接近。
 
-6.最大流二分查找法结合
+3.最大流二分查找法结合
 
 我们通过二分查找法找到一个最小的时间 \( T \)，使得在此时间内警察能够封锁所有关键交通要道。对于每个给定的 \( T \)，通过最大流算法判断是否能满足封锁要求。
 
-7.具体数学模型
+4.具体数学模型
 
 目标函数：
 \[
@@ -411,21 +441,6 @@ T_{\min} = T_{\text{mid}}
 
 其中，\( P \) 为警察局集合，\( K \) 为关键交通要道集合，\( d_{ij} \) 为警察局 \( i \) 到路口 \( j \) 的时间，\( x_{ij} \) 为二元决策变量，表示是否由警察局 \( i \) 封锁路口 \( j \)。
 
-\subsubsection{模型的求解}
-\begin{equation}
-\begin{aligned}
-& \min T \\
-& \text{s.t.} \\
-& \left\{
-\begin{aligned}
-& \sum_{i \in P} x_{ij} \geq 1, && \forall j \in K \\
-& \sum_{j \in K} x_{ij} \leq 1, && \forall i \in P \\
-& x_{ij} \cdot d_{ij} \leq T, && \forall i \in P, \forall j \in K \\
-& \text{flow}(T) \geq |K|
-\end{aligned}
-\right.
-\end{aligned}
-\end{equation}
 \subsubsection{模型求解的结果}
 
 匹配对: [(2, 16), (4, 48), (7, 29), (8, 30), (10, 12), (11, 24), (12, 22), (13, 23), (14, 21), (15, 28), (16, 14), (19, 38), (20, 62)]
@@ -442,16 +457,50 @@ A13 & A14 & A15 & A16 & A19 & A20\\
 \end{tabular}
 \end{center}
 
-\subsubsection{结果的检验}
-\subsubsection{问题的结论}
 \subsubsection{模型检验与分析}
-\subsubsection{误差分析}
-\subsubsection{灵敏度分析}
-\subsubsection{稳定性分析}
-\subsubsection{小结}
+平台 3 到 出入口 16 的时间: 6.0255657677970696。
+
+平台 7 到 出入口 29 的时间: 8.015456859909348。
+
+平台 8 到 出入口 30 的时间: 3.0608198338052887。
+
+平台 9 到 出入口 48 的时间: 4.199410425706616。
+
+平台 10 到 出入口 12 的时间: 7.5865852138889。
+
+平台 11 到 出入口 23 的时间: 4.675095058668105。
+
+平台 12 到 出入口 22 的时间: 6.882540621920882。
+
+平台 13 到 出入口 24 的时间: 2.3853720883753127。
+
+平台 14 到 出入口 21 的时间: 3.264965543462902。
+
+平台 15 到 出入口 28 的时间: 4.751841748206689。
+
+平台 16 到 出入口 14 的时间: 6.74166151627327。
+
+平台 17 到 出入口 38 的时间: 4.7557029641094914。
+
+平台 20 到 出入口 62 的时间: 6.448880030749422。
+
+由此可知，都在8.015456859909348内，完成了进出该区的13条交通要道实现快速全封锁。
+\subsubsection{问题的结论}
+解决这一指派问题，需对进出该区的13条交通要道实现快速全封锁，通过调度全区警力资源以最快速度完成封锁。为此，我们需建立最优调度方案使这一目标最快实现。
+
+为实现对进出该区的13条交通要道快速全封锁，即指派交巡警服务平台到交通要道，目标为封锁完成的时间最短。据此建立最大流二分查找模型，规划出最佳封锁方案。
+%\subsubsection{模型检验与分析}
     \subsection{问题三模型的建立与求解}
 \subsubsection{模型建立}
 基于问题一已建立的扩散搜索模型，引入工作量判定函数，综合考虑A区每个交巡警平台范围内的路径长度与节点发案率，将平台工作量均衡并且尽量保证出警时间在三分钟内作为优化目标，最终确定增加平台的位置与数目，以达到最优设置方案。
+
+    \begin{figure}[H] % [H] 表示强制当前位置插入图片
+        \centering % 使图片居中
+        \includegraphics[width=0.6\textwidth]{"./picture/Q3 origin.png"} % 图片文件名及宽度调整
+        \caption{结果图} % 图片标题
+        \label{fig:example} % 图片标签
+    \end{figure}
+
 \subsubsection{工作量函数的建立}
 工作量由工作时间决定，即出警时间与办案时间，其中，出警时间是路程/速度，办案时间由所调查资料可知，平均时长为30分钟。
 
@@ -481,6 +530,7 @@ W_{pi} = \sum_{j=1}^{n} \left( R_j \times T_{\text{case}} + 2 \times \frac{D_j}{
 \item 搜索到第一个路口节点后，进行工作量函数的计算，根据计算结果，调整该交巡警平台的扩散搜索速率。
 \item 继续重复此循环，直到3km内所有路口节点被搜索完毕，程序终止。
 \end{enumerate}
+
 优点在于无需去除重叠区域且工作量分配更加均匀。
 \begin{enumerate}
     \item \textbf{以相同速率进行扩散搜索，直到搜索到第一个路口节点}：
@@ -520,6 +570,16 @@ W_{pi} = \sum_{j=1}^{n} \left( R_j \times T_{\text{case}} + 2 \times \frac{D_j}{
 CV = \frac{\sigma}{\mu}
 \end{equation}
 
+\begin{itemize}
+    \item 方差 (\(\sigma^2\)) 用于描述数据分布的离散程度，但它受平均值 (\(\mu\)) 的影响较大。
+    \item 变异系数 (\(CV\)) 定义为标准差 (\(\sigma\)) 与平均值 (\(\mu\)) 的比值，可以更好地反映数据的相对离散程度，且不受数据量纲的影响。
+\end{itemize}
+
+\begin{equation}
+CV = \frac{\sigma}{\mu}
+\end{equation}
+
+通过这种方法，我们可以更准确地评估数据分布的均匀性，进而调整警察的调度策略。
 
 \subsubsection{模型在原平台情况求解的结果}
 \begin{center}
@@ -583,6 +643,16 @@ A20 & 338.864981 & 308.987194 \\
 \end{center}
 
 证明了基于工作量函数优化的负反馈扩散算法，在解决平均工作量问题上更有优越性。
+
+结果图如下：
+
+    \begin{figure}[H] % [H] 表示强制当前位置插入图片
+        \centering % 使图片居中
+        \includegraphics[width=0.6\textwidth]{"./picture/Q3 answer.png"} % 图片文件名及宽度调整
+        \caption{问题三结果图} % 图片标题
+        \label{fig:example} % 图片标签
+    \end{figure}
+
 \newpage
 \subsubsection{基于蒙特卡洛的新平台设置方案}
 假设我们需要计算某个函数 \( f(x) \) 在区间 \([a, b]\) 上的积分：
@@ -622,29 +692,30 @@ A1 & A2 & A3 & A4 & $\sigma_W^2$ &\\
 \end{tabular}
 \end{center}
 
-由此，我们新设置的平台为A21	87
-
-A22	61
-
-A23	28
-
-A24	38
+由此，我们新设置的平台为（A21，87），
+（A22 	61），
+（A23 	28），
+（A24	38）。
 
 添加完平台后，各平台工作量方差减小为2959。\subsubsection{结果的检验}
 在满足了3分钟内全覆盖的基础上，且工作量更为平均。
 \subsubsection{问题的结论}
-由此，我们新设置的平台为A21	87
-
-A22	61
-
-A23	28
-
-A24	38
+由此，我们新设置的平台平台为（A21，87），
+（A22 	61），
+（A23 	28），
+（A24	38）。
 
 添加完平台后，各平台工作量方差减小为2959。
     \subsection{问题四模型的建立与求解}
 \subsubsection{数据预处理}
 	首先，我们读取文件，根据区域名称提取出节点坐标、节点间连接关系、平台所在节点和路口所在节点等信息，并将这些数据进行格式化和存入数据库。然后，我们计算连接节点间的欧几里得距离。考虑到点与点之间存在连接关系，并包含距离信息，我们构建了节点网络地图。
+
+    \begin{figure}[H] % [H] 表示强制当前位置插入图片
+        \centering % 使图片居中
+        \includegraphics[width=0.6\textwidth]{"./picture/Q4_origin.png"} % 图片文件名及宽度调整
+        \caption{问题四原平台部署图} % 图片标题
+        \label{fig:example} % 图片标签
+    \end{figure}
 
 	\subsubsection{评价现有平台设置方式}
 工作量由工作时间决定，即出警时间与办案时间，其中，出警时间是路程/速度，出警时间由所调查资料可知，平均时长为30分钟。
@@ -708,6 +779,13 @@ K(u) = \frac{1}{\sqrt{2\pi}} \exp\left( -\frac{u^2}{2} \right)
 \end{equation}
 
 计算密度函数，并验证其基本服从卡方分布。
+
+    \begin{figure}[H] % [H] 表示强制当前位置插入图片
+        \centering % 使图片居中
+        \includegraphics[width=0.6\textwidth]{"./picture/K.png"} % 图片文件名及宽度调整
+        \caption{K方检验图} % 图片标题
+        \label{fig:example} % 图片标签
+    \end{figure}
 
 {4. 选择平台位置}
 
@@ -842,143 +920,73 @@ F570 & 570, 569, 571, 484 \\
 \bottomrule
 \end{longtable}
 
-
-\subsubsection{模型检验与分析}
-
 \subsubsection{结果的检验}
 
-
 在对原平台部署方案优化后得到新方案的变异系数（即工作量不平均特征）减少11\%，未覆盖节点数量减少44.90\%，故可得到现部署方案比原部署方案更合理。
+
+    \begin{figure}[H] % [H] 表示强制当前位置插入图片
+        \centering % 使图片居中
+        \includegraphics[width=0.6\textwidth]{"./picture/Q4_middle1.5_80.png"} % 图片文件名及宽度调整
+        \caption{问题四优化后平台部署图} % 图片标题
+        \label{fig:example} % 图片标签
+    \end{figure}
+
 \subsubsection{问题的结论}
 在不改变平台数量的情况下，原始部署方案有98个节点未被覆盖（即三分钟内无法到达），而修改后的结果只有54个节点未被覆盖，原变异系数:0.46，现变异系数:0.41。
     \subsection{问题五模型的建立与求解}
-\subsubsection{模型建立}
-\subsubsection{最大流算法的模型建立}
-\subsubsection{灵敏度分析}
-\subsubsection{模型建立}
-\begin{equation}
-\begin{aligned}
-&\lambda_1(t) = \left\{i \mid \frac{x(i, 32)}{v} \leq t, i = 1, 2, \ldots, 582 \right\} \\
-&\lambda_2(t) = \left\{j \mid y(i, j) = 1, i \in \lambda_1(t) \right\} \\
-&\lambda_3(t) = \lambda_2(t) - \lambda_1(t) \\
-&\mu(i) = \left\{i \mid t(i, j) \leq t - 3, j \in \lambda_3(t), i = 1, 2, \ldots, 80 \right\} \\
-&\min Z = t \\
-&T(t) \leq t - 3 \\
-&\min Z = \underset{1 \leq j \leq N}{\max} T_j \\
-&\text{subject to:} \\
-&\sum_{j=1}^N x_{ij} \leq 1, \quad i = 1, 2, \ldots, 80 \\
-&\sum_{i=1}^{80} x_{ij} = 1, \quad j = 1, 2, \ldots, N \\
-&x_{ij} \in \{0, 1\}
-\end{aligned}
-\end{equation}
-\subsubsection{模型的求解}
-\subsubsection{模型求解的结果}
-\subsubsection{结果的检验}
-\subsubsection{模型检验与分析}
-\subsubsection{问题的结论}
-%通过对于A区路口与交巡警平台布局的观察，可以发现，大部分出入城区的路口节点在西部地区，而大部分交巡警平台却在东部地区，为此采用分布优化的策略，先满足东部封锁入城区的路口节点的需求，再，考虑西部地区的问题。
-%\begin{enumerate}
-%\item 分区策略：
-%\item 解决东区分配需求：
-%\item 西部二次分区：
-%\item 解决西区分配需求：
-%\end{enumerate}
+\subsubsection{模型建立流程}
 
-	%为了减小计算量，首先对A区进行分区，通过计算A区交巡警平台与出入口节点中心，可知交巡警平台中心位置：横坐标为 334.0，纵坐标为 343.67。出入口节点中心位置：横坐标为 281.15，纵坐标为 322.08。我们可基于此
+先用扩散算法得出小偷的可能的逃跑区域，再调整递归回溯的最远距离，建立最大流模型并用二分查找进行求解，最终得出优化的围堵方案。
 
-最大流问题是在给定一个源点（source）和汇点（sink）的流网络中，找到从源点到汇点的最大流量。网络中每条边都有一个容量限制，表示该边能通过的最大流量。最大流算法的目标是找到一种流量分配方式，使得从源点到汇点的总流量最大。
+\subsubsection{扩散搜索模型的建立}
 
-1.流量守恒约束
+	定位小偷起始位置，对所有平台，以相同扩散速率进行搜索，若搜索到的节点未被其他平台添加到管辖区域内，则将其加入自己的管辖区。在每一轮增加搜索距离之前，计算各个平台工作量之和，根据计算结果，调整该交巡警平台的扩散搜索速率。重复此循环，直到3km内所有路口节点被搜索完毕，程序终止。
 
-在网络的每个节点 \(v\)（除了源点和汇点）处，流量守恒原则要求：
+\subsubsection{最大流算法的建立}
+{图的构建：}
+
+设图 \( G = (V, E) \) 其中：
+\begin{itemize}
+    \item \( V \) 为节点集合，包含警察局、路口、源点和汇点。
+    \item \( E \) 为边集合，表示警察可以在时间 \( T \) 内到达的路口。
+\end{itemize}
+
+{最大流模型：}
+
 \[
-\sum_{u \in V} f(u, v) = \sum_{w \in V} f(v, w)
-\]
-其中，\(f(u, v)\) 表示从节点 \(u\) 到节点 \(v\) 的流量，\(V\) 表示节点集合。
-
-2.边容量约束
-
-每条边的流量不能超过其容量限制：
-\[
-0 \leq f(u, v) \leq c(u, v)
-\]
-其中，\(c(u, v)\) 表示边 \( (u, v) \) 的容量。
-
-3.最大流量
-
-最大流问题的目标是最大化从源点 \( s \) 到汇点 \( t \) 的总流量 \( |f| \)：
-\[
-\max |f| = \sum_{v \in V} f(s, v)
-\]
-
-4.二分查找法
-
-二分查找法是一种在有序数组中查找目标值的高效算法。其基本思想是通过逐步缩小查找范围，将问题规模减半，直到找到目标值或确定目标值不存在。
-
-5.二分查找算法步骤
-
-（1） 初始化左右边界 \( T_{\min} \) 和 \( T_{\max} \)。
-
-（2） 计算中点 \( T_{\text{mid}} \)：
-\[
-T_{\text{mid}} = \frac{T_{\min} + T_{\max}}{2}
-\]
-
-（3） 判断 \( T_{\text{mid}} \) 是否满足条件。如果满足，则更新右边界：
-\[
-T_{\max} = T_{\text{mid}}
-\]
-否则，更新左边界：
-\[
-T_{\min} = T_{\text{mid}}
-\]
-
-（4） 重复步骤2和3，直到左右边界足够接近。
-
-6.最大流二分查找法结合
-
-我们通过二分查找法找到一个最小的时间 \( T \)，使得在此时间内警察能够封锁所有关键交通要道。对于每个给定的 \( T \)，通过最大流算法判断是否能满足封锁要求。
-
-7.具体数学模型
-
-目标函数：
-\[
-\min T
+\max \sum_{(i, j) \in E} f(i, j)
 \]
 
 约束条件：
+
 \[
 \begin{aligned}
-\text{s.t.} \quad & \left\{
-\begin{aligned}
-& \sum_{i \in P} x_{ij} \geq 1, && \forall j \in K \\
-& \sum_{j \in K} x_{ij} \leq 1, && \forall i \in P \\
-& x_{ij} \cdot d_{ij} \leq T, && \forall i \in P, \forall j \in K \\
-& \text{flow}(T) \geq |K|
-\end{aligned}
-\right.
+& \sum_{(i, j) \in E} f(i, j) \leq c(i, j), && \forall (i, j) \in E \\
+& \sum_{i} f(s, i) = \sum_{j} f(j, t) = |K|, && \text{流量守恒}
 \end{aligned}
 \]
 
-其中，\( P \) 为警察局集合，\( K \) 为关键交通要道集合，\( d_{ij} \) 为警察局 \( i \) 到路口 \( j \) 的时间，\( x_{ij} \) 为二元决策变量，表示是否由警察局 \( i \) 封锁路口 \( j \)。
+二分查找法：
 
-\subsubsection{模型的求解}
-\begin{equation}
-\begin{aligned}
-& \min T \\
-& \text{s.t.} \\
-& \left\{
-\begin{aligned}
-& \sum_{i \in P} x_{ij} \geq 1, && \forall j \in K \\
-& \sum_{j \in K} x_{ij} \leq 1, && \forall i \in P \\
-& x_{ij} \cdot d_{ij} \leq T, && \forall i \in P, \forall j \in K \\
-& \text{flow}(T) \geq |K|
-\end{aligned}
-\right.
-\end{aligned}
-\end{equation}
+\[
+T_{\text{mid}} = \frac{T_{\min} + T_{\max}}{2}
+\]
+判断在 \( T_{\text{mid}} \) 时间内是否能够封锁所有路口。如果可以，调整 \( T_{\max} = T_{\text{mid}} \)；否则，调整 \( T_{\min} = T_{\text{mid}} \)。
+
+\subsubsection{迭代模型的求解}
+先从小偷原初所在位置，对三公里范围内进行扩散搜索后，再调整递归回溯的最远距离，即这个区域要封锁的目标路口节点，对时间进行迭代，每一次找出目标路口节点后，利用最大流二分查找计算围堵所需的最小时间，并与嫌疑人最快逃跑时间进行比较，若小于嫌疑人最快逃跑时间，则围堵成功。
 \subsubsection{模型求解的结果}
-结果如下
+最优时间: 10.875649636186163min。
+
+匹配对: [(2, '84'), (3, '85'), (5, '193'), (12, '24'), (16, '553'), (17, '90'), (19, '92'), (167, '252'), (168, '186'), (169, '254'), (172, '277'), (174, '275'), (175, '212'), (177, '175'), (178, '213'), (179, '221'), (180, '178'), (181, '274'), (182, '182'), (320, '370'), (323, '248'), (326, '371'), (372, '491'), (375, '487'), (376, '22'), (378, '530'), (383, '459'), (384, '12'), (475, '567'), (476, '476'), (477, '535'), (478, '568'), (480, '555'), (481, '554'), (482, '565'), (483, '528'), (484, '521'), (485, '563')]
+
+嫌疑人最快逃跑时间:10.7min。
+
+需要封锁的节点：{'212', '491', '521', '24', '371', '554', '370', '175', '544', '459', '221', '530', '563', '84', '186', '555', '85', '471', '535', '92', '248', '567', '90', '213', '182', '22', '178', '274', '487', '193', '275', '277', '254', '568', '565', '252', '528'}
+\subsubsection{结果的检验与仿真}
+确定了最佳抓捕方案后，对嫌疑人逃跑进行仿真，进行10次仿真后发现嫌疑人以60千米每小时的速度进行逃跑也无法逃脱。
+\subsubsection{问题结论}
+结果如下，
 
 \begin{center}
     \setlength{\tabcolsep}{9mm}{
@@ -986,38 +994,485 @@ T_{\min} = T_{\text{mid}}
             \specialrule{1.2pt}{0pt}{0pt} % 设置顶部粗线
             \textbf{口} & \textbf{平台}\\
             \midrule  % 设置中间横线
-            \textnormal{16} & \textnormal{A16}\\
-            \textnormal{41} & \textnormal{A17}\\
-            \textnormal{403} & \textnormal{A2}\\
-            \textnormal{361} & \textnormal{B6}\\
-            \textnormal{10} & \textnormal{A10}\\
-            \textnormal{44} & \textnormal{A4}\\
-            \textnormal{3} & \textnormal{A18}\\
-            \textnormal{40} & \textnormal{A1}\\
-            \textnormal{55} & \textnormal{A3}\\
-            \textnormal{60} & \textnormal{A4}\\
-            \textnormal{168} & \textnormal{C10}\\
-            \textnormal{4} & \textnormal{C3}\\
-            \textnormal{5} & \textnormal{C7}\\
-            \textnormal{6} & \textnormal{A16}\\
-            \textnormal{235} & \textnormal{C8}\\
-            \textnormal{171} & \textnormal{C6}\\
-            \textnormal{230} & \textnormal{C7}\\
-            \textnormal{273} & \textnormal{C5}\\
+            2 & 84\\
+            3 & 85\\
+            5 & 193\\
+            12 & 24\\
+            16 & 553\\
+            17 & 90\\
+            19 & 92\\
+            167 & 252\\
+            168 & 186\\
+            169 & 254\\
+            172 & 277\\
+            174 & 275\\
+            175 & 212\\
+            177 & 175\\
+            178 & 213\\
+            179 & 221\\
+            180 & 178\\
+            181 & 274\\
+            182 & 182\\
+            320 & 370\\
+            323 & 248\\
+            326 & 371\\
+            372 & 491\\
+            375 & 487\\
+            376 & 22\\
+            378 & 530\\
+            383 & 459\\
+            384 & 12\\
+            475 & 567\\
+            476 & 476\\
+            477 & 535\\
+            478 & 568\\
+            480 & 555\\
+            481 & 554\\
+            482 & 565\\
+            483 & 528\\
+            484 & 521\\
+            485 & 563\\
             \specialrule{1.2pt}{0pt}{0pt} % 设置底部粗线
         \end{tabular}
     }
 \end{center}
-\subsubsection{模型建立的准备}
-\subsubsection{模型的求解}
+
+只调用了38个交巡警服务平台，最优时间: 10.875649636186163min。
+
     \begin{thebibliography}{9} % 参考文献
-		\bibitem{bib:8}何晓群.多元统计分析.北京：中国人民大学出版社，2012.
-		\bibitem{bib:9}徐维超. 相关系数研究综述[J]. 广东工业大学学报,2012,29(3):12-17.
+		%\bibitem{bib:8}何晓群.多元统计分析.北京：中国人民大学出版社，2012.
+		%\bibitem{bib:9}徐维超. 相关系数研究综述[J]. 广东工业大学学报,2012,29(3):12-17.
     \end{thebibliography}
+
+我们翻阅了相关文献，发现了没有队伍与我们的主要模型与算法重合，保证了论文的创新性。
 
     \newpage
     \section{附录}
     %插入代码内容
 \begin{lstlisting}
-		\end{lstlisting}
+import matplotlib.pyplot as plt
+import random
+import matplotlib.patheffects as path_effects
+import matplotlib.cm as cm
+import numpy as np
+import matplotlib.colors as mcolors
+import heapq
+from scipy.optimize import linear_sum_assignment
+from scipy.spatial.distance import squareform
+from scipy.cluster.hierarchy import linkage, fcluster
+
+
+def read_f_file(file_name):
+    def line_count(data):
+        line = 0
+        while True:
+            temp = data.readline()
+            if temp == '':
+                data.seek(0, 0)
+                return line
+            line += 1
+    file = open(file_name, 'r', encoding='utf8')
+    line = line_count(file)
+    f = []
+    for i in range(line):
+        f.append(file.readline().strip('\n').split('\t'))
+    return f
+
+
+def main():
+    f_point = read_f_file('data1.txt')
+    f_relation = read_f_file('data2.txt')
+    f_plant = read_f_file('data3.txt')
+    f_inout_point = read_f_file('data4.txt')
+    a_area_inout_point = [i[2] for i in f_inout_point]
+    city_inout_point = [i[1] for i in f_inout_point]
+    del a_area_inout_point[0]
+    del city_inout_point[0]
+    plant_name = [i[0] for i in f_plant]
+    plant_point = [i[1] for i in f_plant]
+    del plant_name[0]
+    del plant_point[0]
+    inout_point = a_area_inout_point + city_inout_point
+    def distance(x1, y1, x2, y2):
+        return ((x1-x2)**2 + (y1-y2)**2)**0.5
+
+    def get_one_area_point(area_name=''):
+        # points_list[[class_name,x,y],[class_name,x,y],......,[class_name,x,y]]
+        points_dict = {}
+        if area_name == '':
+            for j in range(1, len(f_point)):
+                points_dict[f_point[j][0]] = [float(f_point[j][1]), float(f_point[j][2]), f_point[j][3], 0]
+                if f_point[j][0] in plant_point:
+                    points_dict[f_point[j][0]].append(plant_name[plant_point.index(f_point[j][0])])
+                else:
+                    points_dict[f_point[j][0]].append('nor')
+                if f_point[j][0] in inout_point:
+                    points_dict[f_point[j][0]][3] = 1
+                points_dict[f_point[j][0]].append(f_point[j][4])
+        for j in range(1, len(f_point)):
+            if f_point[j][3] == area_name:
+                points_dict[f_point[j][0]] = [float(f_point[j][1]), float(f_point[j][2]), f_point[j][3], 0]
+                if f_point[j][0] in plant_point:
+                    points_dict[f_point[j][0]].append(plant_name[plant_point.index(f_point[j][0])])
+                else:
+                    points_dict[f_point[j][0]].append('nor')
+                if f_point[j][0] in inout_point:
+                    points_dict[f_point[j][0]][3] = 1
+                points_dict[f_point[j][0]].append(f_point[j][4])
+        return points_dict
+
+    def create_road_point_relation(points_dict):
+        # points_relation = {point_name1:[[distance11,point_name11],[distance11,point_name12],...],
+        # point_name2:[[distance21,point_name11],[distance22,point_name12],...]...}
+        points_relation = {}
+        for i in range(1,len(f_relation)):
+            try:
+                points_dict.get(f_relation[i][1])
+                points_dict.get(f_relation[i][0])
+                try:
+                    points_relation.get(f_relation[i][0])
+                    temp_d = distance(points_dict[f_relation[i][0]][0], points_dict[f_relation[i][0]][1],
+                                      points_dict[f_relation[i][1]][0], points_dict[f_relation[i][1]][1])
+                    points_relation[f_relation[i][0]].append([temp_d, f_relation[i][1]])
+                except:
+                    temp_d = distance(points_dict[f_relation[i][0]][0], points_dict[f_relation[i][0]][1],
+                                      points_dict[f_relation[i][1]][0], points_dict[f_relation[i][1]][1])
+                    points_relation[f_relation[i][0]] = [[temp_d, f_relation[i][1]]]
+            except:
+                pass
+        for i in range(1,len(f_relation)):
+            try:
+                points_dict.get(f_relation[i][1])
+                points_dict.get(f_relation[i][0])
+                try:
+                    points_relation.get(f_relation[i][1])
+                    temp_d = distance(points_dict[f_relation[i][0]][0], points_dict[f_relation[i][0]][1],
+                                      points_dict[f_relation[i][1]][0], points_dict[f_relation[i][1]][1])
+                    points_relation[f_relation[i][1]].append([temp_d, f_relation[i][0]])
+                except:
+                    temp_d = distance(points_dict[f_relation[i][0]][0], points_dict[f_relation[i][0]][1],
+                                      points_dict[f_relation[i][1]][0], points_dict[f_relation[i][1]][1])
+                    points_relation[f_relation[i][1]] = [[temp_d, f_relation[i][0]]]
+            except:
+                pass
+        return points_relation
+
+    def dijkstra(area, start, end):
+        # 初始化最小堆
+        graph = create_road_point_relation(get_one_area_point(area))
+        queue = [(0, start, [])]
+        seen = set()
+        min_dist = {start: 0}
+        while queue:
+            (cost, v1, path) = heapq.heappop(queue)
+            if v1 in seen:
+                continue
+            path = path + [v1]
+            seen.add(v1)
+
+            if v1 == end:
+                return (cost, path)
+            for c, v2 in graph.get(v1, []):
+                if v2 in seen:
+                    continue
+                prev = min_dist.get(v2, None)
+                next = cost + c
+                if prev is None or next < prev:
+                    min_dist[v2] = next
+                    heapq.heappush(queue, (next, v2, path))
+        return (float("inf"), [])
+
+    def calculate_work(hold_area, area=''):
+        nodes = get_one_area_point(area)
+        w = {}
+        for key, value in hold_area.items():
+            t = 0
+            for i in range(len(value)):
+                for j, k in nodes.items():
+                    if key in k:
+                        pp = j
+                        break
+                dis, link = dijkstra(area, pp, value[i])
+                t += float(nodes[value[i]][5]) * (dis * 0.2 + 30)
+            w[key] = t
+        return w
+
+    def search(area=''):
+        nodes = get_one_area_point(area)
+        connections = create_road_point_relation(nodes)
+        plant_reach_area = dict()
+        max_reach = 30
+        def track_back_search_area(point, dis, visited):
+            for j in connections.get(point, []):
+                new_dis = dis + j[0]
+                if j[1] not in visited and new_dis < max_reach:
+                    visited.add(j[1])
+                    plant_reach.add(j[1])
+                    track_back_search_area(j[1], new_dis, visited)
+                    visited.remove(j[1])  # 回溯时移除节点
+        for i in range(len(plant_point)):
+            if connections.get(plant_point[i]) != None:
+                plant_reach = set([plant_point[i]])
+                dis = 0
+                track_back_search_area(plant_point[i], dis, set([plant_point[i]]))
+                plant_reach_area[plant_name[i]] = plant_reach
+        return plant_reach_area
+
+    def search_by_step(area):
+        nodes = get_one_area_point(area)
+        connections = create_road_point_relation(nodes)
+        plant_hold = {}
+        all_point = []
+        for key, value in nodes.items():
+            if value[4] != 'nor':
+                plant_hold[value[4]] = []
+            all_point.append(key)
+        all_point = set(all_point)
+        rate = [1 for i in range(len(plant_hold))]
+        max_reach = [(1 / 2) * rate[j] ** 2 for j in range(len(plant_hold))]
+        for i in range(5, 240):
+            plant_reach_area = dict()
+            max_reach = [(1/2) * rate[j] ** 2 + max_reach[j] for j in range(len(plant_hold))]
+            def track_back_search_area(point, dis, visited):
+                for k in connections.get(point, []):
+                    new_dis = dis + k[0]
+                    if k[1] not in visited and new_dis < max_reach[j]:
+                        visited.add(k[1])
+                        plant_reach.add(k[1])
+                        track_back_search_area(k[1], new_dis, visited)
+                        visited.remove(k[1])  # 回溯时移除节点
+            for j in range(len(plant_point)):
+                if connections.get(plant_point[j]) != None:
+                    plant_reach = set([plant_point[j]])
+                    dis = 0
+                    if max_reach[j] < 35:
+                        track_back_search_area(plant_point[j], dis, set([plant_point[j]]))
+                        plant_reach_area[plant_name[j]] = plant_reach
+            for key,value in plant_reach_area.items():
+                for p in value:
+                    if p in all_point:
+                        all_point -= {p}
+                        plant_hold[key].append(p)
+            c_t = calculate_work(plant_hold, area)
+            av = [value for k, value in c_t.items()]
+            rate = [(sum(av)/len(c_t))/value for k, value in c_t.items()]
+        print(all_point)
+        print(len(all_point))
+        print(plant_hold)
+        print(calculate_work(plant_hold))
+        return plant_hold
+
+
+    def draw_map(area=''):
+        color_map = {'A': 'red', 'B': 'blue', 'C': 'green', 'D': 'yellow', 'E': 'purple'}  # 可以根据需要添加更多类别和颜色
+        fig, ax = plt.subplots(figsize=(50, 50), dpi=300)
+        nodes = get_one_area_point(area)
+        # 绘制节点
+        for node, (x, y, category, entrance, description, p) in nodes.items():
+            color = color_map.get(category, 'black')  # 如果类别不在映射中，默认为黑色
+            ax.plot(x, y, 'o', color=color)
+            ax.text(x, y, node, fontsize=12, ha='right')
+            #label = f'*{description}' if entrance == 1 else description
+            #ax.text(x, y, label, fontsize=10, ha='right')
+        connections = create_road_point_relation(nodes)
+        # 绘制连接关系
+        for node, edges in connections.items():
+            x1, y1, _, _, _, _ = nodes[node]
+            for edge in edges:
+                distance, target = edge
+                if target in nodes:
+                    x2, y2, _, _, _, _ = nodes[target]
+                    ax.plot([x1, x2], [y1, y2], 'k-', lw=0.5)  # 节点之间的线
+                    mid_x = (x1 + x2) / 2
+                    mid_y = (y1 + y2) / 2
+                    # 在线的中点处标注距离
+                    ax.text(mid_x, mid_y, f'{distance / 10:.1f}', fontsize=8, ha='center', va='center', color='blue')
+        collections = search_by_step(area)
+        all_point_relate_plant = {}
+        collection_colors = colors = [
+            "#FF0000",  # 红色
+            "#00FF00",  # 绿色
+            "#0000FF",  # 蓝色
+            "#FFFF00",  # 黄色
+            "#FF00FF",  # 品红
+            "#00FFFF",  # 青色
+            "#FFA500",  # 橙色
+            "#800080",  # 紫色
+            "#00FF7F",  # 春绿
+            "#FF1493",  # 深粉红
+            "#1E90FF",  # 道奇蓝
+            "#32CD32",  # 石灰绿
+            "#FF4500",  # 橙红
+            "#8A2BE2",  # 蓝紫色
+            "#ADFF2F",  # 绿黄色
+            "#FF69B4",  # 热粉红
+            "#40E0D0",  # 绿松石
+            "#FF6347",  # 番茄
+            "#EE82EE",  # 紫罗兰
+            "#7FFF00",   # 查特酒绿
+            "#FF0000",  # 红色
+            "#00FF00",  # 绿色
+            "#0000FF",  # 蓝色
+            "#FF0000",  # 红色
+            "#00FF00",  # 绿色
+            "#0000FF",  # 蓝色
+            "#FFFF00",  # 黄色
+            "#FF00FF",  # 品红
+            "#00FFFF",  # 青色
+            "#FFA500",  # 橙色
+            "#800080",  # 紫色
+            "#00FF7F",  # 春绿
+            "#FF1493",  # 深粉红
+            "#1E90FF",  # 道奇蓝
+            "#32CD32",  # 石灰绿
+            "#FF4500",  # 橙红
+            "#8A2BE2",  # 蓝紫色
+            "#ADFF2F",  # 绿黄色
+            "#FF69B4",  # 热粉红
+            "#40E0D0",  # 绿松石
+            "#FF6347",  # 番茄
+            "#EE82EE",  # 紫罗兰
+            "#7FFF00",  # 查特酒绿
+            "#FF0000",  # 红色
+            "#00FF00",  # 绿色
+            "#0000FF",  # 蓝色
+        ]
+        for key, value in collections.items():
+            for i in value:
+                try:
+                    all_point_relate_plant[i].append(key)
+                except:
+                    all_point_relate_plant[i] = [key]
+        for point_name, collection_plants in all_point_relate_plant.items():
+            x, y, _, _, class_n, _ = nodes[point_name]
+            if class_n != 'nor':
+                ax.text(x, y, class_n, fontsize=12, ha='left', va='center',
+                            color=collection_colors[(int(class_n[1:]) - 1)%20])
+            for i in range(len(collection_plants)):
+                ax.scatter(x, y, s=(i + 1) * 100, edgecolor=collection_colors[(int(collection_plants[i][1:]) - 1)%20],
+                               facecolor='none', linewidth=0.5)
+        # 设置图形范围
+        x_values, y_values, _, _, _, _ = zip(*nodes.values())
+        ax.set_xlim(min(x_values) - 10, max(x_values) + 10)
+        ax.set_ylim(min(y_values) - 10, max(y_values) + 10)
+        # 添加标签和标题
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        ax.set_title('Map')
+        ax.legend()
+        # 保存图形
+        plt.savefig('map.png')
+
+    #print(search_by_step('A'))
+    #draw_map('')
+
+    def found_closed_dis(area):
+        node = get_one_area_point(area)
+        ptp = {}
+        for key, value in node.items():
+            if value[3] == 1:
+                ptp[key] = []
+                for i in range(20):
+                    t = dijkstra(area, key, str(i+1))
+                    ptp[key].append(['A'+str(i+1),t[0]])
+        return ptp
+
+    def find_min_sum_distance(graph):
+        # 提取点的名称和距离
+        points = list(graph.keys())
+        all_connections = []
+        for point in points:
+            all_connections.extend([conn[0] for conn in graph[point]])
+        all_connections = list(set(all_connections))
+        # 构建成本矩阵
+        cost_matrix = np.zeros((len(points), len(all_connections)))
+        for i, point in enumerate(points):
+            for j, conn in enumerate(all_connections):
+                for connection in graph[point]:
+                    if connection[0] == conn:
+                        cost_matrix[i][j] = connection[1]
+                        break
+                else:
+                    cost_matrix[i][j] = np.inf  # 如果没有连接，设置为无穷大
+        # 使用匈牙利算法求解最小成本匹配
+        row_ind, col_ind = linear_sum_assignment(cost_matrix)
+        # 计算最小距离和
+        min_distance_sum = cost_matrix[row_ind, col_ind].sum()
+        # 获取匹配结果
+        matching = [(points[i], all_connections[j]) for i, j in zip(row_ind, col_ind)]
+        return min_distance_sum, matching
+    '''
+    min_distance_sum, matching = find_min_sum_distance(found_closed_dis('A'))
+    print(f"最小距离和是: {min_distance_sum}")
+    print("匹配结果是:")
+    for match in matching:
+        print(match)
+    '''
+
+    def release_plant(area=''):
+        nodes = get_one_area_point(area)
+        connections = create_road_point_relation(nodes)
+        point_reach_area = dict()
+        max_reach = 30
+        def track_back_search_area(point, dis, visited):
+            for j in connections.get(point, []):
+                new_dis = dis + j[0]
+                if j[1] not in visited and new_dis < max_reach:
+                    visited.add(j[1])
+                    plant_reach.add(j[1])
+                    track_back_search_area(j[1], new_dis, visited)
+                    visited.remove(j[1])  # 回溯时移除节点
+        for key,value in nodes.items():
+            plant_reach = set([key])
+            dis = 0
+            track_back_search_area(key, dis, set(key))
+            point_reach_area[key] = list(plant_reach)
+        work = calculate_work(point_reach_area, '')
+        plant = []
+        for i in range(len(work)):
+            print(work.values())
+            if len(work) != 0 and len(plant) < 80:
+                #max_key = max(work, key=work.get)
+                average_value = (sum(work.values()) / len(work))*2
+                # 找到离平均值最近的value对应的key
+                closest_key = min(work, key=lambda k: abs(work[k] - average_value))
+                plant.append(closest_key)
+                for j in point_reach_area[closest_key]:
+                    if j in work.keys():
+                        del work[j]
+            else:
+                break
+        return plant
+    #print(release_plant(''))
+
+    def found_crime(area):
+        nodes = get_one_area_point(area)
+        connections = create_road_point_relation(nodes)
+        plant_reach_area = dict()
+        def track_back_search_area(point, dis, visited):
+            for j in connections.get(point, []):
+                new_dis = dis + j[0]
+                if j[1] not in visited and new_dis < 30:
+                    visited.add(j[1])
+                    plant_reach.add(j[1])
+                    track_back_search_area(j[1], new_dis, visited)
+                    visited.remove(j[1])  # 回溯时移除节点
+        for i in range(30,32):
+            plant_reach = set(['32'])
+            dis = 0
+            track_back_search_area('32', dis, set(['32']))
+            plant_reach_area['32'] = plant_reach
+            print(plant_reach_area)
+            all_connected_points = plant_reach_area['32']
+            round_p = set(all_connected_points)
+            for j in list(all_connected_points):
+                for k in connections.get(j, []):
+                    round_p.add(k[1])
+            print(round_p)
+            round_p -= all_connected_points
+            print(round_p)
+        return
+
+main()
+\end{lstlisting}
 \end{document}       
