@@ -5,6 +5,7 @@
 \usepackage{xcolor} 
 \usepackage{graphicx}% 插入表格/图片
 \usepackage{booktabs} % 绘制表格
+\usepackage{longtable} %自动分页
 \usepackage{caption} % 标题
 \usepackage{geometry}
 \usepackage{array}
@@ -55,17 +56,17 @@
 \normalsize
 本文针对问题，建立了回溯算法等多种模型，解决了交巡警服务平台的设置与调度问题。
 
-针对问题一，对三公里路程内进行搜索，
+针对问题一，首先读取文件并进行数据预处理，为解决划分辖区这一问题，需满足交巡警平台管辖的范围内出现突发事件时尽量能在3分钟内抵达事发地这一条件，可将交巡警平台在三分钟内抵达该路口节点作为约束条件。以交巡警平台作为起始点向外延伸三公里进行搜索，由此根据附图1中的交通网络所给出的二十个现有的交巡警服务平台的设置情况示意图和附件2中的相关数据信息，划分管辖区域。
 
-针对问题二，
+针对问题二，    为解决这一指派问题，需对进出该区的13条交通要道实现快速全封锁，通过调度全区警力资源以最快速度完成封锁。为此，我们需建立最优调度方案使这一目标最快实现。
 
-针对问题三，
+为实现对进出该区的13条交通要道快速全封锁，即指派交巡警服务平台到交通要道，目标为封锁完成的时间最短。据此建立最大流二分查找模型，规划出最佳封锁方案。
+
+针对问题三，基于问题一已建立的扩散搜索模型，引入工作量判定函数，综合考虑A区每个交巡警平台范围内的路径长度与节点发案率，将平台工作量均衡并且尽量保证出警时间在三分钟内作为优化目标，最终确定增加平台的位置与数目，以达到最优设置方案。
 
 针对问题四，
 
 针对问题五，
-
-
 
 \textbf{关键字}：
 \end{abstract}
@@ -219,6 +220,7 @@ Dijkstra算法通过上述步骤有效地找到从源点到所有其他节点的
 	\subsubsection{扩散模型的引入}
 	定位每一个交巡警服务平台，对所有平台，以相同扩散速率进行搜索，若搜索到的节点未被其他平台添加到管辖区域内，则将其加入自己的管辖区。在每一轮增加搜索距离之前，计算各个平台工作量之和，根据计算结果，调整该交巡警平台的扩散搜索速率。重复此循环，直到3km内所有路口节点被搜索完毕，程序终止。
 
+\begin{center}
 \begin{tikzpicture}[node distance=2cm]
 
 \node (start) [startstop] {开始};
@@ -234,13 +236,14 @@ Dijkstra算法通过上述步骤有效地找到从源点到所有其他节点的
 \draw [arrow] (locate) -- (search);
 \draw [arrow] (search) -- (find);
 \draw [arrow] (find) -- node[anchor=east] {是} (compute);
-\draw [arrow] (find.east) -- ++(1.5,0) |- node[anchor=north] {否} (repeat);
+\draw [arrow] (find.east) -- ++(1.5,0) |- node[anchor=south] {否} (repeat);
 \draw [arrow] (compute) -- (repeat);
 \draw [arrow] (repeat) -- (within);
 \draw [arrow] (within) -- node[anchor=east] {是} (stop);
-\draw [arrow] (within.east) -- ++(1.5,0) |- node[anchor=north] {否} (repeat);
+\draw [arrow] (within.east) -- ++(1.5,0) |- node[anchor=south] {否} (repeat);
 
 \end{tikzpicture}
+\end{center}
 
 \begin{enumerate}
     \item \textbf{定位每一个交巡警服务平台}：
@@ -549,8 +552,7 @@ A20 & 20, 84, 85, 86, 87, 88, 89, 90, 91, 92\\
 \end{tabular}
 \end{center}
 
-\begin{table}[h]
-\centering
+\begin{center}
 \begin{tabular}{ccccccc}
 \toprule
 站台号 & 原始工作量 & 第二个数据的工作量 \\
@@ -575,10 +577,10 @@ A17 & 164.137680 & 164.137680 \\
 A18 & 189.512156 & 195.590621 \\
 A19 & 104.291359 & 165.873061 \\
 A20 & 338.864981 & 308.987194 \\
+
 \bottomrule
 \end{tabular}
-\caption{工作量对比表}
-\end{table}
+\end{center}
 
 证明了基于工作量函数优化的负反馈扩散算法，在解决平均工作量问题上更有优越性。
 \newpage
@@ -739,14 +741,24 @@ N = N \setminus \{ n_i \,|\, d(n_{\text{selected}}, n_i) \leq 3 \text{ km} \}
 
 以下是新部署方案下的具体平台管辖分配。
 
-
-
-\begin{table}[htbp]
-\centering
-\begin{tabular}{ll}
+\begin{longtable}{cc}
+\caption{自动分页表格示例}\\
 \toprule
-区域 & 节点 \\
+区域 & 节点\\
 \midrule
+\endfirsthead
+
+\toprule
+区域 & 节点\\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+\midrule
+\endlastfoot
+
 A3 & 3, 44, 55, 65, 66, 64, 54, 63 \\
 A5 & 5, 49, 50, 53, 47, 48 \\
 A11 & 11, 26, 27 \\
@@ -828,59 +840,8 @@ F559 & 559, 550, 558, 551 \\
 F561 & 561, 38 \\
 F570 & 570, 569, 571, 484 \\
 \bottomrule
-\end{tabular}
-\caption{节点分布表}
-\end{table}
+\end{longtable}
 
-
-
-
-\begin{table}[htbp]
-\centering
-\begin{tabular}{ll}
-\toprule
-区域 & 节点 \\
-\midrule
-D363 & 363, 324, 364, 365, 366, 325 \\
-E372 & 372, 22, 23, 21, 457, 456 \\
-E375 & 375, 429, 424, 430, 425, 428, 431, 426, 432, 433, 374, 427, 434, 435, 436 \\
-E377 & 377, 376 \\
-E380 & 380, 396, 441, 397 \\
-E382 & 382, 101, 403, 93, 102, 103 \\
-E393 & 393, 392, 391, 394 \\
-E399 & 399, 400, 381, 401, 405, 398, 406 \\
-E407 & 407, 404, 438, 408 \\
-E413 & 413, 412, 414, 409, 410, 415, 416, 161, 411, 402 \\
-E421 & 421, 417 \\
-E423 & 423, 379, 422, 378 \\
-E437 & 437, 373 \\
-E440 & 440, 442, 395, 439, 443 \\
-E444 & 444, 447, 386 \\
-E445 & 445, 446, 455, 448 \\
-E452 & 452, 451, 453, 464, 450, 462, 454, 465 \\
-E460 & 460, 383, 461 \\
-E469 & 469, 470, 463, 468 \\
-E472 & 472, 384, 471, 466, 467 \\
-E473 & 473, 385, 474, 449 \\
-F478 & 478, 542, 537, 538, 543, 544, 539 \\
-F479 & 479, 580, 576, 577, 581, 579, 573 \\
-F480 & 480, 567, 568, 562, 566 \\
-F486 & 486, 487, 491, 458, 493 \\
-F490 & 490, 481, 531, 489 \\
-F501 & 501, 497, 477, 530, 498, 496, 500, 492, 495, 499 \\
-F503 & 503, 519, 502, 518, 520, 521, 517, 529, 516, 494 \\
-F506 & 506, 505, 509, 507, 508, 504 \\
-F525 & 525, 514, 527, 524, 528, 526, 523, 515, 513, 522, 512 \\
-F535 & 535, 534, 545, 546, 533, 476, 536 \\
-F548 & 548, 532, 549, 547, 552, 553 \\
-F557 & 557, 475, 564, 556, 555, 554, 563, 565 \\
-F559 & 559, 550, 558, 551 \\
-F561 & 561, 38 \\
-F570 & 570, 569, 571, 484 \\
-\bottomrule
-\end{tabular}
-\caption{节点分布表}
-\end{table}
 
 \subsubsection{模型检验与分析}
 
@@ -895,6 +856,21 @@ F570 & 570, 569, 571, 484 \\
 \subsubsection{最大流算法的模型建立}
 \subsubsection{灵敏度分析}
 \subsubsection{模型建立}
+\begin{equation}
+\begin{aligned}
+&\lambda_1(t) = \left\{i \mid \frac{x(i, 32)}{v} \leq t, i = 1, 2, \ldots, 582 \right\} \\
+&\lambda_2(t) = \left\{j \mid y(i, j) = 1, i \in \lambda_1(t) \right\} \\
+&\lambda_3(t) = \lambda_2(t) - \lambda_1(t) \\
+&\mu(i) = \left\{i \mid t(i, j) \leq t - 3, j \in \lambda_3(t), i = 1, 2, \ldots, 80 \right\} \\
+&\min Z = t \\
+&T(t) \leq t - 3 \\
+&\min Z = \underset{1 \leq j \leq N}{\max} T_j \\
+&\text{subject to:} \\
+&\sum_{j=1}^N x_{ij} \leq 1, \quad i = 1, 2, \ldots, 80 \\
+&\sum_{i=1}^{80} x_{ij} = 1, \quad j = 1, 2, \ldots, N \\
+&x_{ij} \in \{0, 1\}
+\end{aligned}
+\end{equation}
 \subsubsection{模型的求解}
 \subsubsection{模型求解的结果}
 \subsubsection{结果的检验}
@@ -1002,19 +978,35 @@ T_{\min} = T_{\text{mid}}
 \end{aligned}
 \end{equation}
 \subsubsection{模型求解的结果}
-
-匹配对: [(2, 16), (4, 48), (7, 29), (8, 30), (10, 12), (11, 24), (12, 22), (13, 23), (14, 21), (15, 28), (16, 14), (19, 38), (20, 62)]
+结果如下
 
 \begin{center}
-\begin{tabular}{ccccccc}
-\toprule
-A2 & A4 & A7 & A8 & A10 & A11 & A12 \\
-16 & 48 & C & D & E & F & G \\
-\midrule
-A13 & A14 & A15 & A16 & A19 & A20\\
-1 & 2 & 3 & 4 & 5 & 6\\
-\bottomrule
-\end{tabular}
+    \setlength{\tabcolsep}{9mm}{
+        \begin{tabular}{cc}
+            \specialrule{1.2pt}{0pt}{0pt} % 设置顶部粗线
+            \textbf{口} & \textbf{平台}\\
+            \midrule  % 设置中间横线
+            \textnormal{16} & \textnormal{A16}\\
+            \textnormal{41} & \textnormal{A17}\\
+            \textnormal{403} & \textnormal{A2}\\
+            \textnormal{361} & \textnormal{B6}\\
+            \textnormal{10} & \textnormal{A10}\\
+            \textnormal{44} & \textnormal{A4}\\
+            \textnormal{3} & \textnormal{A18}\\
+            \textnormal{40} & \textnormal{A1}\\
+            \textnormal{55} & \textnormal{A3}\\
+            \textnormal{60} & \textnormal{A4}\\
+            \textnormal{168} & \textnormal{C10}\\
+            \textnormal{4} & \textnormal{C3}\\
+            \textnormal{5} & \textnormal{C7}\\
+            \textnormal{6} & \textnormal{A16}\\
+            \textnormal{235} & \textnormal{C8}\\
+            \textnormal{171} & \textnormal{C6}\\
+            \textnormal{230} & \textnormal{C7}\\
+            \textnormal{273} & \textnormal{C5}\\
+            \specialrule{1.2pt}{0pt}{0pt} % 设置底部粗线
+        \end{tabular}
+    }
 \end{center}
 \subsubsection{模型建立的准备}
 \subsubsection{模型的求解}
