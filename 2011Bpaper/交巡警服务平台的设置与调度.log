@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.25)  20 JUL 2024 14:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.25)  20 JUL 2024 15:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -906,6 +906,9 @@ LaTeX Warning: Label `fig:example' multiply defined.
 
 LaTeX Warning: Label `fig:example' multiply defined.
 
+
+LaTeX Warning: Label `fig:example' multiply defined.
+
 )
 \openout1 = `‰∫§Â∑°Ë≠¶ÊúçÂä°Âπ≥Âè∞ÁöÑËÆæÁΩÆ‰∏éË∞ÉÂ∫¶.aux'.
 
@@ -1152,18 +1155,18 @@ Package geometry Warning: `a4paper': not available in `\newgeometry'; skipped.
 [2
 
 ] [3] [4]
-<./picture/Q1_origin.png, id=201, 985.7628pt x 985.7628pt>
+<./picture/Q1_origin.png, id=203, 985.7628pt x 985.7628pt>
 File: ./picture/Q1_origin.png Graphic file (type png)
 <use ./picture/Q1_origin.png>
-Package pdftex.def Info: ./picture/Q1_origin.png  used on input line 204.
+Package pdftex.def Info: ./picture/Q1_origin.png  used on input line 202.
 (pdftex.def)             Requested size: 249.9318pt x 249.92972pt.
-<./picture/liu.jpg, id=203, 661.47125pt x 1141.26375pt>
+<./picture/liu.jpg, id=205, 661.47125pt x 1141.26375pt>
 File: ./picture/liu.jpg Graphic file (type jpg)
 <use ./picture/liu.jpg>
-Package pdftex.def Info: ./picture/liu.jpg  used on input line 261.
+Package pdftex.def Info: ./picture/liu.jpg  used on input line 259.
 (pdftex.def)             Requested size: 249.9318pt x 431.21191pt.
  [5 <./picture/Q1_origin.png>]
-Overfull \hbox (10.00034pt too wide) in paragraph at lines 269--271
+Overfull \hbox (10.00034pt too wide) in paragraph at lines 267--269
 []\C70/rm/m/n/10.53937/8b æ \C70/rm/m/n/10.53937/4e § \C70/rm/m/n/10.53937/5d ·
  \C70/rm/m/n/10.53937/8b f \C70/rm/m/n/10.53937/67 ^^M \C70/rm/m/n/10.53937/52 
 ° \C70/rm/m/n/10.53937/5e s \C70/rm/m/n/10.53937/53  \C70/rm/m/n/10.53937/96 ∆
@@ -1178,23 +1181,23 @@ S/cmsy/m/n/10.53937 f\OML/cmm/m/it/10.53937 n[]; n[]; [] ; n[]\OMS/cmsy/m/n/10.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 269--271
+Underfull \hbox (badness 10000) in paragraph at lines 267--269
 
  []
 
-<./picture/Q1 answer.png, id=212, 911.3247pt x 911.3247pt>
+<./picture/Q1 answer.png, id=214, 911.3247pt x 911.3247pt>
 File: ./picture/Q1 answer.png Graphic file (type png)
 <use ./picture/Q1 answer.png>
-Package pdftex.def Info: ./picture/Q1 answer.png  used on input line 294.
+Package pdftex.def Info: ./picture/Q1 answer.png  used on input line 292.
 (pdftex.def)             Requested size: 249.9318pt x 249.92673pt.
 [6 <./picture/liu.jpg>] [7 <./picture/Q1 answer.png>] [8] [9]
-<./picture/Q3 origin.png, id=240, 890.6073pt x 890.6073pt>
+<./picture/Q3 origin.png, id=242, 890.6073pt x 890.6073pt>
 File: ./picture/Q3 origin.png Graphic file (type png)
 <use ./picture/Q3 origin.png>
-Package pdftex.def Info: ./picture/Q3 origin.png  used on input line 499.
+Package pdftex.def Info: ./picture/Q3 origin.png  used on input line 497.
 (pdftex.def)             Requested size: 249.9318pt x 249.92552pt.
  [10]
-Overfull \hbox (6.07904pt too wide) in paragraph at lines 509--511
+Overfull \hbox (6.07904pt too wide) in paragraph at lines 507--509
 []\C70/rm/m/n/10.53937/8b æ \C70/rm/m/n/10.53937/4e § \C70/rm/m/n/10.53937/5d ·
  \C70/rm/m/n/10.53937/8b f \C70/rm/m/n/10.53937/67 ^^M \C70/rm/m/n/10.53937/52 
 ° \C70/rm/m/n/10.53937/5e s \C70/rm/m/n/10.53937/53  \C70/rm/m/n/10.53937/96 ∆
@@ -1209,12 +1212,12 @@ S/cmsy/m/n/10.53937 f\OML/cmm/m/it/10.53937 n[]; n[]; [] ; n[]\OMS/cmsy/m/n/10.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 509--511
+Underfull \hbox (badness 10000) in paragraph at lines 507--509
 
  []
 
 
-Overfull \hbox (13.00443pt too wide) in paragraph at lines 513--514
+Overfull \hbox (13.00443pt too wide) in paragraph at lines 511--512
 []\C70/rm/m/n/10.53937/89 Å \C70/rm/m/n/10.53937/8b ° \C70/rm/m/n/10.53937/7b ó
  \C70/rm/m/n/10.53937/8b f \C70/rm/m/n/10.53937/5b ﬂ å \C70/rm/m/n/10.53937/62 
 ^^P \C70/rm/m/n/10.53937/96 D \C70/rm/m/n/10.53937/8f — \C70/rm/m/n/10.53937/8d
@@ -1231,65 +1234,82 @@ L| \C70/rm/m/n/10.53937/62 ^^Q \C70/rm/m/n/10.53937/4e Ï \C70/rm/m/n/10.53937/5
  []
 
 [11{f:/latex/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}
- <./picture/Q3 origin.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 582--583
+ <./picture/Q3 origin.png>] [12]
+Underfull \hbox (badness 10000) in paragraph at lines 619--620
 
  []
 
-[12] [13]
-Underfull \hbox (badness 10000) in paragraph at lines 645--646
+[13] [14]
+Underfull \hbox (badness 10000) in paragraph at lines 682--683
 
  []
 
-<./picture/Q3 answer.png, id=259, 1447.3272pt x 1447.3272pt>
+<./picture/Q3 answer.png, id=264, 1447.3272pt x 1447.3272pt>
 File: ./picture/Q3 answer.png Graphic file (type png)
 <use ./picture/Q3 answer.png>
-Package pdftex.def Info: ./picture/Q3 answer.png  used on input line 651.
+Package pdftex.def Info: ./picture/Q3 answer.png  used on input line 688.
 (pdftex.def)             Requested size: 249.9318pt x 249.92921pt.
-[14 <./picture/Q3 answer.png>]
-<./picture/Q4_origin.png, id=265, 1210.5225pt x 1210.5225pt>
+[15 <./picture/Q3 answer.png>]
+<./picture/Q4_origin.png, id=269, 1210.5225pt x 1210.5225pt>
 File: ./picture/Q4_origin.png Graphic file (type png)
 <use ./picture/Q4_origin.png>
-Package pdftex.def Info: ./picture/Q4_origin.png  used on input line 715.
+Package pdftex.def Info: ./picture/Q4_origin.png  used on input line 752.
 (pdftex.def)             Requested size: 249.9318pt x 249.93193pt.
- [15] [16 <./picture/Q4_origin.png>]
-<./picture/K.png, id=277, 899.02542pt x 520.27708pt>
+ [16] [17 <./picture/Q4_origin.png>]
+<./picture/K.png, id=280, 899.02542pt x 520.27708pt>
 File: ./picture/K.png Graphic file (type png)
 <use ./picture/K.png>
-Package pdftex.def Info: ./picture/K.png  used on input line 785.
+Package pdftex.def Info: ./picture/K.png  used on input line 822.
 (pdftex.def)             Requested size: 249.9318pt x 144.63661pt.
- [17 <./picture/K.PNG>] [18] [19]
-<./picture/Q4_middle1.5_80.png, id=290, 1210.0407pt x 1210.0407pt>
+ [18 <./picture/K.PNG>] [19] [20]
+<./picture/Q4_middle1.5_80.png, id=293, 1210.0407pt x 1210.0407pt>
 File: ./picture/Q4_middle1.5_80.png Graphic file (type png)
 <use ./picture/Q4_middle1.5_80.png>
-Package pdftex.def Info: ./picture/Q4_middle1.5_80.png  used on input line 929.
+Package pdftex.def Info: ./picture/Q4_middle1.5_80.png  used on input line 966.
 
 (pdftex.def)             Requested size: 249.9318pt x 249.92477pt.
- [20 <./picture/Q4_middle1.5_80.png>] [21] [22]
-
-LaTeX Warning: Empty `thebibliography' environment on input line 1045.
+ [21 <./picture/Q4_middle1.5_80.png>] [22]
+Overfull \hbox (26.4619pt too wide) in paragraph at lines 1049--1050
+[]\C70/rm/m/n/10.53937/90 ^^Z \C70/rm/m/n/10.53937/8f « \C70/rm/m/n/10.53937/65
+ 9 \C70/rm/m/n/10.53937/53 ÿ \C70/rm/m/n/10.53937/5a Ã \C70/rm/m/n/10.53937/75 
+ë \C70/rm/m/n/10.53937/4e ∫ \C70/rm/m/n/10.53937/90 ^^C \C70/rm/m/n/10.53937/8d
+ — \C70/rm/m/n/10.53937/90 ^^_ \C70/rm/m/n/10.53937/5e ¶|\C70/rm/m/n/10.53937/f
+f ^^L| \C70/rm/m/n/10.53937/52 ^^F + \C70/rm/m/n/10.53937/6d K \C70/rm/m/n/10.5
+3937/8b ’ \C70/rm/m/n/10.53937/4e Ü \C70/rm/m/n/10.53937/65 ˆ \C70/rm/m/n/10.53
+937/90 ^^_ \C70/rm/m/n/10.53937/4e :\OT1/cmr/m/n/10.53937 (-20) 60\C70/rm/m/n/1
+0.53937/53 C \C70/rm/m/n/10.53937/7c s \C70/rm/m/n/10.53937/4e ^^N\OT1/cmr/m/n/
+10.53937 (-20) 70\C70/rm/m/n/10.53937/53 C \C70/rm/m/n/10.53937/7c s \C70/rm/m/
+n/10.53937/76 Ù \C70/rm/m/n/10.53937/81 Û\OT1/cmr/m/n/10.53937 (-20) 120\C70/rm
+/m/n/10.53937/53 C \C70/rm/m/n/10.53937/7c s \C70/rm/m/n/10.53937/65 ˆ|\C70/rm/
+m/n/10.53937/ff ^^L| \C70/rm/m/n/10.53937/65 ˆ \C70/rm/m/n/10.53937/90 ^^_\OT1/
+cmr/m/n/10.53937 (-20) 120km\C70/rm/m/n/10.53937/65 ˆ
+ []
 
 [23] [24]
+
+LaTeX Warning: Empty `thebibliography' environment on input line 1129.
+
+[25]
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 1
-078.
+162.
  (f:/latex/texlive/2024/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.53937> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1078.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1162.
 
- [25]
-[26] [27]
+ [26] [27]
+[28]
 LaTeX Font Info:    Trying to load font information for OML+cmr on input line 1
-180.
+264.
  (f:/latex/texlive/2024/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10.53937> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 1180.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 1264.
 
- [28]
-[29] [30] [31] [32] [33] [34] [35] [36]
+ [29] [30]
+[31] [32] [33] [34] [35] [36] [37]
 (./‰∫§Â∑°Ë≠¶ÊúçÂä°Âπ≥Âè∞ÁöÑËÆæÁΩÆ‰∏éË∞ÉÂ∫¶.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
@@ -1301,15 +1321,15 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 26153 strings out of 474116
- 520197 string characters out of 5744699
+ 26347 strings out of 474116
+ 523916 string characters out of 5744699
  2166190 words of memory out of 5000000
- 47680 multiletter control sequences out of 15000+600000
- 621524 words of font info for 298 fonts, out of 8000000 for 9000
+ 47823 multiletter control sequences out of 15000+600000
+ 634214 words of font info for 345 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  88i,16n,92p,1036b,847s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/s
-imsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows
+imhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows
 /Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:
 /Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei
 .ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Font
@@ -1323,15 +1343,15 @@ tf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/
 simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Window
 s/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c
 :/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhe
-i.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fon
+i.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fon
 ts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Win
-dows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc
-><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/si
-msun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/
+dows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc
+><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/si
+mhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/
 Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/
 Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.
 ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts
-/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windo
+/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windo
 ws/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><
 c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/sims
 un.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fo
@@ -1350,29 +1370,30 @@ onts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/W
 indows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.t
 tc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/
 simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Window
-s/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c
-:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsu
-n.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fon
+s/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c
+:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsu
+n.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fon
 ts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Win
 dows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc
-><f:/latex/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><f
-:/latex/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><f:/l
-atex/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><f:/late
-x/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><f:/latex/t
-exlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><f:/latex/texli
-ve/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><f:/latex/texlive/2
-024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><f:/latex/texlive/2024/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><f:/latex/texlive/2024/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><f:/latex/texlive/2024/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy10.pfb><f:/latex/texlive/2024/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy7.pfb><f:/latex/texlive/2024/texmf-dist/fonts/
-type1/public/amsfonts/symbols/msbm10.pfb><f:/latex/texlive/2024/texmf-dist/font
-s/type1/public/cm-super/sfrm1000.pfb>
-Output written on ‰∫§Â∑°Ë≠¶ÊúçÂä°Âπ≥Âè∞ÁöÑËÆæÁΩÆ‰∏éË∞ÉÂ∫¶.pdf (36 pages, 830252
-9 bytes).
+><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/si
+msun.ttc><c:/Windows/Fonts/simsun.ttc><f:/latex/texlive/2024/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmbx10.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmbx12.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmex10.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmmi10.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi5.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmmi7.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr10.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr5.pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
+pfb><f:/latex/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+><f:/latex/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><f:
+/latex/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><
+f:/latex/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on ‰∫§Â∑°Ë≠¶ÊúçÂä°Âπ≥Âè∞ÁöÑËÆæÁΩÆ‰∏éË∞ÉÂ∫¶.pdf (37 pages, 832534
+3 bytes).
 PDF statistics:
- 794 PDF objects out of 1000 (max. 8388607)
- 508 compressed objects within 6 object streams
+ 816 PDF objects out of 1000 (max. 8388607)
+ 525 compressed objects within 6 object streams
  0 named destinations out of 1000 (max. 500000)
  31065 words of extra memory for PDF output out of 35830 (max. 10000000)
 
